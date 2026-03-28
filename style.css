@@ -1,0 +1,18 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700&display=swap');
+
+body {
+    font-family: 'Inter', sans-serif;
+}
+
+:root {
+    --primary-purple: #824dc1;
+    --accent-titanium: #d1d5db;
+}
+
+h1, h2 {
+    letter-spacing: -0.025em;
+}
+
+html {
+    scroll-behavior: smooth;
+}

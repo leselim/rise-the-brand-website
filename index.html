@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rise The Brand | Elevate Your Clean</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <style>
+        [x-cloak] { display: none !important; }
+        html { scroll-behavior: smooth; }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800" x-data="{ cartOpen: false, distributorModal: false }">
+
+    <nav class="flex justify-between items-center p-6 bg-white shadow-sm sticky top-0 z-50">
+        <div class="text-2xl font-bold tracking-tighter text-[#824dc1]">RISE THE BRAND</div>
+        <div class="hidden md:flex space-x-8 font-medium text-sm uppercase tracking-wide">
+            <a href="#home" class="hover:text-[#824dc1] transition">Home</a>
+            <a href="#story" class="hover:text-[#824dc1] transition">Our Story</a>
+            <a href="#shop" class="hover:text-[#824dc1] transition">Shop All</a>
+            <a href="#reviews" class="hover:text-[#824dc1] transition">Reviews</a>
+            <a href="#contact" class="hover:text-[#824dc1] transition">Contact</a>
+        </div>
+        <div class="flex items-center space-x-4">
+            <button @click="distributorModal = true" class="hidden lg:block text-xs font-bold text-[#824dc1] border border-[#824dc1] px-4 py-2 rounded uppercase hover:bg-[#824dc1] hover:text-white transition">Distributor Signup</button>
+            <button @click="cartOpen = true" class="relative text-gray-600 hover:text-[#824dc1] p-2 transition">
+                <i class="fa-solid fa-bag-shopping text-xl"></i>
+                <span class="absolute top-0 right-0 bg-[#824dc1] text-white text-[10px] font-bold px-1.5 rounded-full">0</span>
+            </button>
+        </div>
+    </nav>
+
+    <header id="home" class="relative h-[80vh] flex items-center justify-center text-center bg-gradient-to-r from-[#824dc1] via-purple-500 to-indigo-500">
+        <div class="max-w-3xl px-4 text-white">
+            <h1 class="text-6xl font-extrabold mb-4 leading-tight">
+                Bath to better <br><span class="text-white">physical wellness</span> is here
+            </h1>
+            <p class="text-lg mb-8 text-purple-100">
+                Count on our expert physical therapy experts to help you move better and feel better.
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <button class="bg-white text-[#824dc1] px-8 py-4 rounded-full font-bold hover:bg-gray-100 transition shadow-lg">
+                    Schedule a Consultation
+                </button>
+                <button @click="distributorModal = true" class="bg-transparent border-2 border-white text-white px-8 py-4 rounded-full font-bold hover:bg-white/10 transition">
+                    Become a Distributor
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <section id="story" class="py-20 px-6 max-w-5xl mx-auto grid md:grid-cols-2 gap-12 items-center">
+        <div>
+            <h2 class="text-4xl font-bold mb-6">Feeling better starts with moving better</h2>
+            <p class="text-gray-600 leading-relaxed mb-6 text-lg">
+                Rise The Brand is dedicated to excellence. Our mission is to provide premium cleaning solutions and wellness services that elevate your daily life.
+            </p>
+            <button class="border-2 border-[#824dc1] text-[#824dc1] px-8 py-2 rounded-md font-bold hover:bg-[#824dc1] hover:text-white transition">
+                Learn More
+            </button>
+        </div>
+        <div class="bg-gray-200 h-64 rounded-xl flex items-center justify-center text-gray-400 italic shadow-inner">
+            Brand Persona Image
+        </div>
+    </section>
+
+    <section id="shop" class="bg-white py-20 px-6 border-y border-gray-100">
+        <div class="max-w-6xl mx-auto">
+            <h2 class="text-3xl font-bold text-center mb-12 uppercase tracking-widest text-gray-500">
+                Our Cleaning Solutions
+            </h2>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 items-stretch">
+                <div class="border border-gray-100 p-8 rounded-xl shadow-sm hover:shadow-lg transition-all flex flex-col items-center text-center bg-white h-full">
+                    <div class="h-24 flex items-center justify-center mb-6">
+                        <i class="fa-solid fa-spray-can-sparkles text-5xl text-[#824dc1]"></i>
+                    </div>
+                    <h3 class="font-bold text-lg mb-4 flex-grow">Rise Multi-Purpose Cleaner</h3>
+                    <button @click="cartOpen = true" class="mt-auto w-full bg-[#824dc1] text-white py-2.5 rounded font-bold hover:brightness-110 transition shadow-sm">Add to Cart</button>
+                </div>
+                <div class="border border-gray-100 p-8 rounded-xl shadow-sm hover:shadow-lg transition-all flex flex-col items-center text-center bg-white h-full">
+                    <div class="h-24 flex items-center justify-center mb-6">
+                        <i class="fa-solid fa-leaf text-5xl text-[#824dc1]"></i>
+                    </div>
+                    <h3 class="font-bold text-lg mb-4 flex-grow">Rise Pine Gel</h3>
+                    <button @click="cartOpen = true" class="mt-auto w-full bg-[#824dc1] text-white py-2.5 rounded font-bold hover:brightness-110 transition shadow-sm">Add to Cart</button>
+                </div>
+                <div class="border border-gray-100 p-8 rounded-xl shadow-sm hover:shadow-lg transition-all flex flex-col items-center text-center bg-white h-full">
+                    <div class="h-24 flex items-center justify-center mb-6">
+                        <i class="fa-solid fa-fill-drip text-5xl text-[#824dc1]" style="display: block !important;"></i>
+                    </div>
+                    <h3 class="font-bold text-lg mb-4 flex-grow">Rise Thick Bleach</h3>
+                    <button @click="cartOpen = true" class="mt-auto w-full bg-[#824dc1] text-white py-2.5 rounded font-bold hover:brightness-110 transition shadow-sm">Add to Cart</button>
+                </div>
+                <div class="border border-gray-100 p-8 rounded-xl shadow-sm hover:shadow-lg transition-all flex flex-col items-center text-center bg-white h-full">
+                    <div class="h-24 flex items-center justify-center mb-6">
+                        <i class="fa-solid fa-soap text-5xl text-[#824dc1]"></i>
+                    </div>
+                    <h3 class="font-bold text-lg mb-4 flex-grow">Rise Dishwashing Liquid</h3>
+                    <button @click="cartOpen = true" class="mt-auto w-full bg-[#824dc1] text-white py-2.5 rounded font-bold hover:brightness-110 transition shadow-sm">Add to Cart</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="reviews" class="bg-[#824dc1] py-20 px-6 text-white text-center">
+        <div class="max-w-6xl mx-auto">
+            <h2 class="text-3xl font-bold mb-12">What Our Customers Say</h2>
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="bg-white text-gray-800 p-8 rounded-lg shadow flex flex-col h-full text-left">
+                    <div class="text-yellow-400 mb-4 text-xs"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+                    <p class="mb-4 italic">"The best cleaning products I've ever used. The Rise Pine Gel is a game changer!"</p>
+                    <cite class="font-bold mt-auto border-t pt-4 block text-[#824dc1]">— Leseli Morakile</cite>
+                </div>
+                <div class="bg-white text-gray-800 p-8 rounded-lg shadow flex flex-col h-full text-left">
+                    <div class="text-yellow-400 mb-4 text-xs"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+                    <p class="mb-4 italic">"Professional service and excellent results. My home has never felt this fresh."</p>
+                    <cite class="font-bold mt-auto border-t pt-4 block text-[#824dc1]">— Lesedi Pheto</cite>
+                </div>
+                <div class="bg-white text-gray-800 p-8 rounded-lg shadow flex flex-col h-full text-left">
+                    <div class="text-yellow-400 mb-4 text-xs"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+                    <p class="mb-4 italic">"Highly recommended for both quality products and reliable service."</p>
+                    <cite class="font-bold mt-auto border-t pt-4 block text-[#824dc1]">— Mosima Pheto</cite>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer id="contact" class="bg-white text-gray-800 py-16 px-6 mt-16 border-t shadow-inner">
+        <div class="max-w-6xl mx-auto grid md:grid-cols-4 gap-12">
+            <div class="col-span-1 md:col-span-1">
+                <h4 class="font-bold text-xl mb-4 text-[#824dc1]">RISE THE BRAND</h4>
+                <p class="text-xs text-gray-400 italic">Generated by Momo's 1 Stop Boutique</p>
+            </div>
+            <div>
+                <h4 class="font-bold text-sm uppercase tracking-widest mb-6 text-[#824dc1]">Contact Details</h4>
+                <ul class="text-sm text-gray-600 space-y-3">
+                    <li class="flex items-start"><i class="fa-solid fa-location-dot mt-1 mr-3 text-[#824dc1]"></i> 3 Strings Road, Fairsleads, Benoni, 1501</li>
+                    <li class="flex items-center"><i class="fa-solid fa-phone mr-3 text-[#824dc1]"></i> (+27) 83 397 3376</li>
+                    <li class="flex items-center"><i class="fa-solid fa-envelope mr-3 text-[#824dc1]"></i> info@risethebrand.co.za</li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="font-bold text-sm uppercase tracking-widest mb-6 text-[#824dc1]">Operating Hours</h4>
+                <ul class="text-sm text-gray-600 space-y-2">
+                    <li class="flex justify-between border-b pb-1"><span>Mon–Fri:</span><span>8am – 5pm</span></li>
+                    <li class="flex justify-between"><span>Saturday:</span><span>9am – 1pm</span></li>
+                </ul>
+            </div>
+            <div class="md:text-right">
+                <h4 class="font-bold text-sm uppercase tracking-widest mb-6 text-[#824dc1]">Social Media</h4>
+                <div class="flex md:justify-end space-x-6 text-2xl">
+                    <a href="#" class="hover:text-purple-400 transition"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="https://www.facebook.com/profile.php?viewas=100000686899395&id=100066484102802" target="_blank" class="hover:text-[#824dc1] transition"><i class="fa-brands fa-facebook"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <div x-show="distributorModal" class="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm" x-cloak x-transition>
+        <div @click.away="distributorModal = false" class="bg-white rounded-xl p-8 max-w-md w-full shadow-2xl" x-data="{ 
+            name: '', email: '', location: '', phone: '', loading: false, success: false,
+            async submit() {
+                this.loading = true;
+                try {
+                    const scriptURL = 'https://script.google.com/macros/s/AKfycbxeQJETBqlG2e7-JU_RROiEUFCjCIgalv8tEDqryW1pqxVKLkiGHYDVBCvTeyHqxeoh/exec';
+                    await fetch(scriptURL, {
+                        method: 'POST',
+                        mode: 'no-cors', 
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ name: this.name, email: this.email, location: this.location, phone: this.phone })
+                    });
+                    this.success = true;
+                    this.name = ''; this.email = ''; this.location = ''; this.phone = '';
+                    setTimeout(() => { this.distributorModal = false; this.success = false; }, 3000);
+                } catch (e) { alert('Error connecting to database. Please try again.'); }
+                this.loading = false;
+            }
+        }">
+            <h2 class="text-2xl font-bold text-[#824dc1] mb-6 text-center">Become a Distributor</h2>
+            <div x-show="!success">
+                <form @submit.prevent="submit" class="space-y-4">
+                    <input x-model="name" type="text" placeholder="Full Name" required class="w-full border p-3 rounded-lg outline-[#824dc1] text-sm">
+                    <input x-model="email" type="email" placeholder="Email Address" required class="w-full border p-3 rounded-lg outline-[#824dc1] text-sm">
+                    <input x-model="phone" type="tel" placeholder="Contact Number" required class="w-full border p-3 rounded-lg outline-[#824dc1] text-sm">
+                    <input x-model="location" type="text" placeholder="Location/Address" required class="w-full border p-3 rounded-lg outline-[#824dc1] text-sm">
+                    <button type="submit" :disabled="loading" class="w-full bg-[#824dc1] text-white py-4 rounded-lg font-bold hover:brightness-110 disabled:opacity-50 transition-all flex items-center justify-center">
+                        <span x-show="!loading">Submit Application</span>
+                        <span x-show="loading"><i class="fa-solid fa-spinner animate-spin mr-2"></i>Processing...</span>
+                    </button>
+                </form>
+            </div>
+            <div x-show="success" class="text-center py-8" x-transition>
+                <i class="fa-solid fa-circle-check text-6xl text-green-500 mb-4"></i>
+                <p class="text-xl font-bold text-gray-800">Registration Sent!</p>
+            </div>
+            <button @click="distributorModal = false" class="mt-6 text-sm text-gray-400 block w-full text-center hover:text-gray-600">Cancel & Close</button>
+        </div>
+    </div>
+
+    <div x-show="cartOpen" class="fixed inset-0 z-[100] overflow-hidden" x-cloak x-transition>
+        <div class="absolute inset-0 bg-black/25 backdrop-blur-sm" @click="cartOpen = false"></div>
+        <div class="absolute inset-y-0 right-0 max-w-sm w-full bg-white shadow-2xl p-8 flex flex-col">
+            <div class="flex justify-between items-center mb-10">
+                <h2 class="text-2xl font-bold">Shopping Bag</h2>
+                <button @click="cartOpen = false" class="text-gray-400 hover:text-black transition"><i class="fa-solid fa-xmark text-2xl"></i></button>
+            </div>
+            <div class="flex-grow flex flex-col items-center justify-center text-gray-300">
+                <i class="fa-solid fa-cart-flatbed text-5xl mb-4"></i>
+                <p class="text-lg">Your bag is currently empty.</p>
+            </div>
+            <div class="border-t pt-6">
+                <button class="w-full bg-[#824dc1] text-white py-4 rounded-xl font-bold hover:brightness-110 transition shadow-lg">Proceed to Checkout</button>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
