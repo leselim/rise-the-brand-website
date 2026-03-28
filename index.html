@@ -13,134 +13,155 @@
         html { scroll-behavior: smooth; }
     </style>
 </head>
-<body class="bg-gray-50 text-gray-800" x-data="{ cartOpen: false, distributorModal: false }">
+<body class="bg-gray-50 text-gray-800" x-data="{ cartOpen: false, distributorModal: false, mobileMenu: false }">
 
-    <nav class="flex justify-between items-center p-6 bg-white shadow-sm sticky top-0 z-50">
-        <div class="text-2xl font-bold tracking-tighter text-[#824dc1]">RISE THE BRAND</div>
-        <div class="hidden md:flex space-x-8 font-medium text-sm uppercase tracking-wide">
-            <a href="#home" class="hover:text-[#824dc1] transition">Home</a>
-            <a href="#story" class="hover:text-[#824dc1] transition">Our Story</a>
-            <a href="#shop" class="hover:text-[#824dc1] transition">Shop All</a>
-            <a href="#reviews" class="hover:text-[#824dc1] transition">Reviews</a>
-            <a href="#contact" class="hover:text-[#824dc1] transition">Contact</a>
+    <nav class="bg-white shadow-sm sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <div class="text-xl md:text-2xl font-bold tracking-tighter text-[#824dc1]">RISE THE BRAND</div>
+                
+                <div class="hidden md:flex space-x-8 font-medium text-xs uppercase tracking-wide">
+                    <a href="#home" class="hover:text-[#824dc1] transition">Home</a>
+                    <a href="#story" class="hover:text-[#824dc1] transition">Our Story</a>
+                    <a href="#shop" class="hover:text-[#824dc1] transition">Shop All</a>
+                    <a href="#reviews" class="hover:text-[#824dc1] transition">Reviews</a>
+                    <a href="#contact" class="hover:text-[#824dc1] transition">Contact</a>
+                </div>
+
+                <div class="flex items-center space-x-2 md:space-x-4">
+                    <button @click="distributorModal = true" class="hidden lg:block text-xs font-bold text-[#824dc1] border border-[#824dc1] px-4 py-2 rounded uppercase hover:bg-[#824dc1] hover:text-white transition">Distributor Signup</button>
+                    <button @click="cartOpen = true" class="relative text-gray-600 hover:text-[#824dc1] p-2 transition">
+                        <i class="fa-solid fa-bag-shopping text-xl"></i>
+                        <span class="absolute top-0 right-0 bg-[#824dc1] text-white text-[10px] font-bold px-1.5 rounded-full">0</span>
+                    </button>
+                    <button @click="mobileMenu = !mobileMenu" class="md:hidden text-gray-600 text-2xl p-2">
+                        <i class="fa-solid" :class="mobileMenu ? 'fa-xmark' : 'fa-bars'"></i>
+                    </button>
+                </div>
+            </div>
         </div>
-        <div class="flex items-center space-x-4">
-            <button @click="distributorModal = true" class="hidden lg:block text-xs font-bold text-[#824dc1] border border-[#824dc1] px-4 py-2 rounded uppercase hover:bg-[#824dc1] hover:text-white transition">Distributor Signup</button>
-            <button @click="cartOpen = true" class="relative text-gray-600 hover:text-[#824dc1] p-2 transition">
-                <i class="fa-solid fa-bag-shopping text-xl"></i>
-                <span class="absolute top-0 right-0 bg-[#824dc1] text-white text-[10px] font-bold px-1.5 rounded-full">0</span>
-            </button>
+
+        <div x-show="mobileMenu" x-transition class="md:hidden bg-white border-t border-gray-100 px-4 py-6 space-y-4 font-bold uppercase text-sm tracking-widest text-center" x-cloak>
+            <a href="#home" @click="mobileMenu = false" class="block py-2">Home</a>
+            <a href="#story" @click="mobileMenu = false" class="block py-2">Our Story</a>
+            <a href="#shop" @click="mobileMenu = false" class="block py-2">Shop All</a>
+            <a href="#reviews" @click="mobileMenu = false" class="block py-2">Reviews</a>
+            <a href="#contact" @click="mobileMenu = false" class="block py-2">Contact</a>
+            <button @click="distributorModal = true; mobileMenu = false" class="w-full text-[#824dc1] border border-[#824dc1] py-3 rounded">Distributor Signup</button>
         </div>
     </nav>
 
-    <header id="home" class="relative h-[80vh] flex items-center justify-center text-center bg-gradient-to-r from-[#824dc1] via-purple-500 to-indigo-500">
-        <div class="max-w-3xl px-4 text-white">
-            <h1 class="text-6xl font-extrabold mb-4 leading-tight">
+    <header id="home" class="relative min-h-[70vh] md:h-[80vh] flex items-center justify-center text-center bg-gradient-to-r from-[#824dc1] via-purple-500 to-indigo-500 py-20 px-4">
+        <div class="max-w-3xl text-white">
+            <h1 class="text-4xl md:text-6xl font-extrabold mb-4 leading-tight">
                 Rise to better <br><span class="text-white">clean spaces</span> today
             </h1>
-            <p class="text-lg mb-8 text-purple-100">
+            <p class="text-base md:text-lg mb-8 text-purple-100">
                 Count on our trusted cleaning products to make your home fresh, safe, and sparkling
             </p>
-            <div class="flex flex-col sm:flex-row gap-4 justify-center">
-                <button class="bg-white text-[#824dc1] px-8 py-4 rounded-full font-bold hover:bg-gray-100 transition shadow-lg">
+            <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                <button @click="cartOpen = true" class="w-full sm:w-auto bg-white text-[#824dc1] px-10 py-4 rounded-full font-bold hover:bg-gray-100 transition shadow-lg">
                     Get Your Clean
                 </button>
-                <button @click="distributorModal = true" class="bg-transparent border-2 border-white text-white px-8 py-4 rounded-full font-bold hover:bg-white/10 transition">
+                <button @click="distributorModal = true" class="w-full sm:w-auto bg-transparent border-2 border-white text-white px-10 py-4 rounded-full font-bold hover:bg-white/10 transition">
                     Become a Distributor
                 </button>
             </div>
         </div>
     </header>
 
-    <section id="story" class="py-20 px-6 max-w-5xl mx-auto grid md:grid-cols-2 gap-12 items-center">
-        <div>
-            <h2 class="text-4xl font-bold mb-6">Feeling fresh starts with cleaning better</h2>
-            <p class="text-gray-600 leading-relaxed mb-6 text-lg">
+    <section id="story" class="py-16 md:py-24 px-6 max-w-6xl mx-auto flex flex-col md:grid md:grid-cols-2 gap-12 items-center">
+        <div class="order-2 md:order-1 text-center md:text-left">
+            <h2 class="text-3xl md:text-4xl font-bold mb-6">Feeling fresh starts with cleaning better</h2>
+            <p class="text-gray-600 leading-relaxed mb-8 text-base md:text-lg">
                 Rise The Brand is a South African cleaning products company providing affordable, high-quality solutions to keep homes and workspaces clean, safe, and fresh.
             </p>
             <button class="border-2 border-[#824dc1] text-[#824dc1] px-8 py-2 rounded-md font-bold hover:bg-[#824dc1] hover:text-white transition">
                 Learn More
             </button>
         </div>
-        <div class="bg-gray-200 h-64 rounded-xl flex items-center justify-center text-gray-400 italic shadow-inner">
+        <div class="order-1 md:order-2 w-full bg-gray-200 h-64 md:h-80 rounded-2xl flex items-center justify-center text-gray-400 italic shadow-inner">
             Brand Persona Image
         </div>
     </section>
 
-    <section id="shop" class="bg-white py-20 px-6 border-y border-gray-100">
-        <div class="max-w-6xl mx-auto">
-            <h2 class="text-3xl font-bold text-center mb-12 uppercase tracking-widest text-gray-500">
+    <section id="shop" class="bg-white py-16 md:py-24 px-6 border-y border-gray-100">
+        <div class="max-w-7xl mx-auto">
+            <h2 class="text-2xl md:text-3xl font-bold text-center mb-12 uppercase tracking-widest text-gray-500">
                 Our Cleaning Solutions
             </h2>
 
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 items-stretch">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8 items-stretch">
                 <div class="border border-gray-100 p-8 rounded-xl shadow-sm hover:shadow-lg transition-all flex flex-col items-center text-center bg-white h-full">
                     <div class="h-24 flex items-center justify-center mb-6">
                         <i class="fa-solid fa-spray-can-sparkles text-5xl text-[#824dc1]"></i>
                     </div>
-                    <h3 class="font-bold text-lg mb-4 flex-grow">Rise Multi-Purpose Cleaner</h3>
-                    <button @click="cartOpen = true" class="mt-auto w-full bg-[#824dc1] text-white py-2.5 rounded font-bold hover:brightness-110 transition shadow-sm">Add to Cart</button>
+                    <h3 class="font-bold text-lg mb-6 flex-grow">Rise Multi-Purpose Cleaner</h3>
+                    <button @click="cartOpen = true" class="w-full bg-[#824dc1] text-white py-3 rounded font-bold hover:brightness-110 transition shadow-sm">Add to Cart</button>
                 </div>
+
                 <div class="border border-gray-100 p-8 rounded-xl shadow-sm hover:shadow-lg transition-all flex flex-col items-center text-center bg-white h-full">
                     <div class="h-24 flex items-center justify-center mb-6">
                         <i class="fa-solid fa-leaf text-5xl text-[#824dc1]"></i>
                     </div>
-                    <h3 class="font-bold text-lg mb-4 flex-grow">Rise Pine Gel</h3>
-                    <button @click="cartOpen = true" class="mt-auto w-full bg-[#824dc1] text-white py-2.5 rounded font-bold hover:brightness-110 transition shadow-sm">Add to Cart</button>
+                    <h3 class="font-bold text-lg mb-6 flex-grow">Rise Pine Gel</h3>
+                    <button @click="cartOpen = true" class="w-full bg-[#824dc1] text-white py-3 rounded font-bold hover:brightness-110 transition shadow-sm">Add to Cart</button>
                 </div>
+
                 <div class="border border-gray-100 p-8 rounded-xl shadow-sm hover:shadow-lg transition-all flex flex-col items-center text-center bg-white h-full">
                     <div class="h-24 flex items-center justify-center mb-6">
                         <i class="fa-solid fa-fill-drip text-5xl text-[#824dc1]" style="display: block !important;"></i>
                     </div>
                     <h3 class="font-bold text-lg mb-4 flex-grow">Rise Thick Bleach</h3>
-                    <button @click="cartOpen = true" class="mt-auto w-full bg-[#824dc1] text-white py-2.5 rounded font-bold hover:brightness-110 transition shadow-sm">Add to Cart</button>
+                    <button @click="cartOpen = true" class="mt-auto w-full bg-[#824dc1] text-white py-3 rounded font-bold hover:brightness-110 transition shadow-sm">Add to Cart</button>
                 </div>
+
                 <div class="border border-gray-100 p-8 rounded-xl shadow-sm hover:shadow-lg transition-all flex flex-col items-center text-center bg-white h-full">
                     <div class="h-24 flex items-center justify-center mb-6">
                         <i class="fa-solid fa-soap text-5xl text-[#824dc1]"></i>
                     </div>
                     <h3 class="font-bold text-lg mb-4 flex-grow">Rise Dishwashing Liquid</h3>
-                    <button @click="cartOpen = true" class="mt-auto w-full bg-[#824dc1] text-white py-2.5 rounded font-bold hover:brightness-110 transition shadow-sm">Add to Cart</button>
+                    <button @click="cartOpen = true" class="w-full bg-[#824dc1] text-white py-3 rounded font-bold hover:brightness-110 transition shadow-sm">Add to Cart</button>
                 </div>
             </div>
         </div>
     </section>
 
-    <section id="reviews" class="bg-[#824dc1] py-20 px-6 text-white text-center">
-        <div class="max-w-6xl mx-auto">
-            <h2 class="text-3xl font-bold mb-12">What Our Customers Say</h2>
-            <div class="grid md:grid-cols-3 gap-8">
-                <div class="bg-white text-gray-800 p-8 rounded-lg shadow flex flex-col h-full text-left">
+    <section id="reviews" class="bg-[#824dc1] py-16 md:py-24 px-6 text-white text-center">
+        <div class="max-w-7xl mx-auto">
+            <h2 class="text-2xl md:text-3xl font-bold mb-12">What Our Customers Say</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="bg-white text-gray-800 p-8 rounded-xl shadow-lg flex flex-col h-full text-left">
                     <div class="text-yellow-400 mb-4 text-xs"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
-                    <p class="mb-4 italic">"The best cleaning products I've ever used. The Rise Pine Gel is a game changer!"</p>
-                    <cite class="font-bold mt-auto border-t pt-4 block text-[#824dc1]">— Leseli Morakile</cite>
+                    <p class="mb-4 italic text-sm md:text-base">"The best cleaning products I've ever used. The Rise Pine Gel is a game changer!"</p>
+                    <cite class="font-bold mt-auto border-t pt-4 block text-[#824dc1] text-sm">— Leseli Morakile</cite>
                 </div>
-                <div class="bg-white text-gray-800 p-8 rounded-lg shadow flex flex-col h-full text-left">
+                <div class="bg-white text-gray-800 p-8 rounded-xl shadow-lg flex flex-col h-full text-left">
                     <div class="text-yellow-400 mb-4 text-xs"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
-                    <p class="mb-4 italic">"Professional service and excellent results. My home has never felt this fresh."</p>
-                    <cite class="font-bold mt-auto border-t pt-4 block text-[#824dc1]">— Lesedi Pheto</cite>
+                    <p class="mb-4 italic text-sm md:text-base">"Professional service and excellent results. My home has never felt this fresh."</p>
+                    <cite class="font-bold mt-auto border-t pt-4 block text-[#824dc1] text-sm">— Lesedi Pheto</cite>
                 </div>
-                <div class="bg-white text-gray-800 p-8 rounded-lg shadow flex flex-col h-full text-left">
+                <div class="bg-white text-gray-800 p-8 rounded-xl shadow-lg flex flex-col h-full text-left">
                     <div class="text-yellow-400 mb-4 text-xs"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
-                    <p class="mb-4 italic">"Highly recommended for both quality products and reliable service."</p>
-                    <cite class="font-bold mt-auto border-t pt-4 block text-[#824dc1]">— Mosima Pheto</cite>
+                    <p class="mb-4 italic text-sm md:text-base">"Highly recommended for both quality products and reliable service."</p>
+                    <cite class="font-bold mt-auto border-t pt-4 block text-[#824dc1] text-sm">— Mosima Pheto</cite>
                 </div>
             </div>
         </div>
     </section>
 
-    <footer id="contact" class="bg-white text-gray-800 py-16 px-6 mt-16 border-t shadow-inner">
-        <div class="max-w-6xl mx-auto grid md:grid-cols-4 gap-12">
-            <div class="col-span-1 md:col-span-1">
+    <footer id="contact" class="bg-white text-gray-800 py-16 px-6 border-t">
+        <div class="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-12 text-center sm:text-left">
+            <div class="col-span-1">
                 <h4 class="font-bold text-xl mb-4 text-[#824dc1]">RISE THE BRAND</h4>
                 <p class="text-xs text-gray-400 italic">Generated by Momo's 1 Stop Boutique</p>
             </div>
             <div>
                 <h4 class="font-bold text-sm uppercase tracking-widest mb-6 text-[#824dc1]">Contact Details</h4>
                 <ul class="text-sm text-gray-600 space-y-3">
-                    <li class="flex items-start"><i class="fa-solid fa-location-dot mt-1 mr-3 text-[#824dc1]"></i> 3 Strings Road, Fairsleads, Benoni, 1501</li>
-                    <li class="flex items-center"><i class="fa-solid fa-phone mr-3 text-[#824dc1]"></i> (+27) 83 397 3376</li>
-                    <li class="flex items-center"><i class="fa-solid fa-envelope mr-3 text-[#824dc1]"></i> info@risethebrand.co.za</li>
+                    <li class="flex items-start justify-center sm:justify-start"><i class="fa-solid fa-location-dot mt-1 mr-3 text-[#824dc1]"></i> 3 Strings Road, Fairsleads, Benoni, 1501</li>
+                    <li><i class="fa-solid fa-phone mr-3 text-[#824dc1]"></i> (+27) 83 397 3376</li>
+                    <li><i class="fa-solid fa-envelope mr-3 text-[#824dc1]"></i> info@risethebrand.co.za</li>
                 </ul>
             </div>
             <div>
@@ -150,9 +171,9 @@
                     <li class="flex justify-between"><span>Saturday:</span><span>9am – 1pm</span></li>
                 </ul>
             </div>
-            <div class="md:text-right">
+            <div class="flex flex-col items-center sm:items-end">
                 <h4 class="font-bold text-sm uppercase tracking-widest mb-6 text-[#824dc1]">Social Media</h4>
-                <div class="flex md:justify-end space-x-6 text-2xl">
+                <div class="flex space-x-6 text-2xl">
                     <a href="#" class="hover:text-purple-400 transition"><i class="fa-brands fa-instagram"></i></a>
                     <a href="https://www.facebook.com/profile.php?viewas=100000686899395&id=100066484102802" target="_blank" class="hover:text-[#824dc1] transition"><i class="fa-brands fa-facebook"></i></a>
                 </div>
@@ -203,7 +224,7 @@
 
     <div x-show="cartOpen" class="fixed inset-0 z-[100] overflow-hidden" x-cloak x-transition>
         <div class="absolute inset-0 bg-black/25 backdrop-blur-sm" @click="cartOpen = false"></div>
-        <div class="absolute inset-y-0 right-0 max-w-sm w-full bg-white shadow-2xl p-8 flex flex-col">
+        <div class="absolute inset-y-0 right-0 max-w-sm w-full bg-white shadow-2xl p-6 md:p-8 flex flex-col">
             <div class="flex justify-between items-center mb-10">
                 <h2 class="text-2xl font-bold">Shopping Bag</h2>
                 <button @click="cartOpen = false" class="text-gray-400 hover:text-black transition"><i class="fa-solid fa-xmark text-2xl"></i></button>
