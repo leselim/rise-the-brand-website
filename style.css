@@ -1,18 +1,52 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700&display=swap');
-
-body {
-    font-family: 'Inter', sans-serif;
-}
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&display=swap');
 
 :root {
     --primary-purple: #824dc1;
-    --accent-titanium: #d1d5db;
+    --dark-bg: #0f172a;
 }
 
-h1, h2 {
-    letter-spacing: -0.025em;
+body {
+    font-family: 'Inter', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
+/* Custom Scrollbar for the cart and page */
+::-webkit-scrollbar {
+    width: 6px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #824dc1;
+    border-radius: 10px;
+}
+
+/* Smooth Scrolling */
 html {
     scroll-behavior: smooth;
+}
+
+/* High-end transitions */
+.transition-all {
+    transition-duration: 300ms;
+}
+
+/* Product Card Hover Effect */
+.group:hover .group-hover\:scale-110 {
+    transform: scale(1.1);
+}
+
+/* Button hover brightness */
+.hover\:brightness-110:hover {
+    filter: brightness(1.1);
+}
+
+/* Ensure images/placeholders stay contained */
+.aspect-square, .aspect-\[4\/5\] {
+    position: relative;
+    overflow: hidden;
 }
