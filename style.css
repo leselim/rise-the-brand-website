@@ -9,6 +9,7 @@ body {
     font-family: 'Inter', sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
 }
 
 /* Custom Scrollbar for the cart and page */
@@ -45,6 +46,15 @@ html {
     filter: brightness(1.1);
 }
 
+.aspect-square, .aspect-\[4\/5\] {
+    position: relative;
+    overflow: hidden;
+}
+
+/* Fix for mobile menu overlap */
+[x-cloak] {
+    display: none !important;
+}
 /* Ensure images/placeholders stay contained */
 .aspect-square, .aspect-\[4\/5\] {
     position: relative;
