@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Check, CheckCircle2, Star, ArrowRight, X, Droplet, Flame, Leaf, RefreshCw } from 'lucide-react';
+import { Check, Star, ArrowRight, X, Droplet, Flame, Leaf, RefreshCw, Sparkles } from 'lucide-react';
 import multipurposeImg from '../assets/multipurpose-cleaner.png';
 
 export const FeaturedProduct: React.FC = () => {
