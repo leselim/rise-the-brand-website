@@ -8,7 +8,7 @@ export const settings = {
   currency: "R",
 
   // Until the payment gateway is connected, orders are sent by email to this inbox.
-  orderEmail: "hello@risethebrand.co.za",
+  orderEmail: "info@risethebrand.co.za",
 
   // When the payment gateway is ready, add its checkout link here.
   checkoutUrl: "",
