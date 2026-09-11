@@ -21,6 +21,39 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      # This repo holds two things nobody serves: the OLD brochure site at the
+      # root, and rise-the-brand/website/, a prebuilt copy the README still tells
+      # the owner to upload by hand. Editing either one changes nothing live,
+      # while every later step passes. That is exactly the confusion this
+      # pipeline caused on 11 Sep 2026, so catch it here, by name, before
+      # anything is built.
+      - name: Refuse a push that only edited files nobody serves
+        run: |
+          set -uo pipefail
+          BEFORE="${{ github.event.before }}"
+          if [ -z "${BEFORE}" ] || [ "${BEFORE}" = "0000000000000000000000000000000000000000" ]; then
+            echo "No previous commit to compare against. Skipping this check."
+            exit 0
+          fi
+          CHANGED="$(git diff --name-only "${BEFORE}" "${GITHUB_SHA}" || true)"
+          if [ -z "${CHANGED}" ]; then
+            echo "No file list available. Skipping this check."
+            exit 0
+          fi
+          echo "Files changed in this push:"
+          echo "${CHANGED}"
+          TOUCHED_LIVE="$(echo "${CHANGED}" | grep -c "^${SITE_DIR}/" || true)"
+          TOUCHED_DEAD="$(echo "${CHANGED}" | grep -cE '^(src/|index[.]html$|vite[.]config[.]ts$|tsconfig|rise-the-brand/website/)' || true)"
+          if [ "${TOUCHED_LIVE}" -eq 0 ] && [ "${TOUCHED_DEAD}" -gt 0 ]; then
+            echo "::error::This push only changed files that are NOT part of the live website."
+            echo "::error::The live site is built from ${SITE_DIR}. Nothing you changed would have appeared on risethebrand.co.za."
+            echo "::error::Edit the files under ${SITE_DIR} instead, then push again."
+            exit 1
+          fi
+          echo "Push touches the live site, or is unrelated to either. Continuing."
 
       - name: Set up Node
         uses: actions/setup-node@v4
@@ -58,7 +91,7 @@ jobs:
           server: ${{ secrets.FTP_HOST }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
-          local-dir: ./rise-the-brand/source/dist/
+          local-dir: ./rise-the-brand/source/dist/   # keep in step with SITE_DIR above
           server-dir: ./public_html/
 
       # The guard. A 200 is not proof and a green upload is not proof.
@@ -69,7 +102,7 @@ jobs:
         run: |
           set -uo pipefail
           for attempt in 1 2 3 4 5 6; do
-            BODY="$(curl -s --max-time 30 "${LIVE_URL}?cb=$(date +%s)-${attempt}" || true)"
+            BODY="$(curl -sL --max-time 30 "${LIVE_URL}?cb=$(date +%s)-${attempt}" || true)"
             if printf '%s' "${BODY}" | grep -q "build ${GITHUB_SHA}"; then
               echo "Confirmed: ${LIVE_URL} is serving ${GITHUB_SHA}."
               exit 0
