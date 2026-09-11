@@ -1,8 +1,19 @@
+# Deploys the site in rise-the-brand/source to risethebrand.co.za on every push to main.
+
+# The last step is not optional. Twice now this pipeline has reported a green
+# tick while the live site was untouched: once because the upload went to the
+# wrong folder, once because the build read a folder nobody had edited. A
+# deploy that cannot prove the live site changed must fail, not pass quietly.
+
 name: Deploy to production
 
 on:
   push:
     branches: [main]
+
+env:
+  SITE_DIR: rise-the-brand/source
+  LIVE_URL: https://risethebrand.co.za/
 
 jobs:
   build-and-deploy:
@@ -16,12 +27,30 @@ jobs:
         with:
           node-version: 20
           cache: npm
+          cache-dependency-path: rise-the-brand/source/package-lock.json
 
+      # npm ci, not npm install: it installs exactly what package-lock.json
+      # pins, so a deploy months from now builds the same site as today.
       - name: Install dependencies
-        run: npm ci
+        working-directory: ${{ env.SITE_DIR }}
+        run: npm ci --no-audit --no-fund
 
       - name: Build
+        working-directory: ${{ env.SITE_DIR }}
         run: npm run build
+
+      # Writes this commit's SHA into the page so the final step can prove the
+      # live server is serving THIS build and not a leftover from a previous one.
+      - name: Stamp the build with this commit
+        run: |
+          set -euo pipefail
+          DIST="${SITE_DIR}/dist"
+          if [ ! -f "${DIST}/index.html" ]; then
+            echo "::error::No index.html in ${DIST}. The build produced nothing to deploy."
+            exit 1
+          fi
+          printf '\n<!-- build %s -->\n' "${GITHUB_SHA}" >> "${DIST}/index.html"
+          echo "Stamped ${DIST}/index.html with ${GITHUB_SHA}"
 
       - name: Deploy to server
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
@@ -29,5 +58,25 @@ jobs:
           server: ${{ secrets.FTP_HOST }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
-          local-dir: ./dist/
+          local-dir: ./rise-the-brand/source/dist/
           server-dir: ./public_html/
+
+      # The guard. A 200 is not proof and a green upload is not proof.
+      # Fetch the real page and assert this commit's stamp is in the body.
+      # Cache-buster is ?cb= on purpose: ?s= is a search parameter on many
+      # stacks and returns a page that is not the one being tested.
+      - name: Verify the live site is actually serving this commit
+        run: |
+          set -uo pipefail
+          for attempt in 1 2 3 4 5 6; do
+            BODY="$(curl -s --max-time 30 "${LIVE_URL}?cb=$(date +%s)-${attempt}" || true)"
+            if printf '%s' "${BODY}" | grep -q "build ${GITHUB_SHA}"; then
+              echo "Confirmed: ${LIVE_URL} is serving ${GITHUB_SHA}."
+              exit 0
+            fi
+            echo "Attempt ${attempt}: not serving ${GITHUB_SHA} yet, waiting 15s..."
+            sleep 15
+          done
+          echo "::error::Upload reported success but ${LIVE_URL} is NOT serving commit ${GITHUB_SHA}."
+          echo "::error::The live site did not change. Check the build path and the FTP target before trusting this run."
+          exit 1
