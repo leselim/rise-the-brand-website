@@ -57,7 +57,11 @@ Each photo comes in three sizes in source/public/images/products/:
 The browser picks the right size automatically, so phones never download more than they need.
 
 To change a photo, replace all three files with transparent background WebP or PNG images
-at those heights, keeping the same names. If the new photo is a different shape,
+at those heights, keeping the same names. THEN bump "photoVersion" by one at the
+top of store.js. The build renames scripts and stylesheets automatically, but it
+copies pictures across unchanged, so without that bump anyone who has visited
+the site before keeps seeing the old photo. If a new picture does not appear,
+this is almost always why. If the new photo is a different shape,
 update the widths written in imageSet in store.js.
 The "scale" value in store.js controls how tall each bottle looks next to the other.
 
