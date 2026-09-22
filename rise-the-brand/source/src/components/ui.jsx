@@ -2,6 +2,7 @@ import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { Link } from "../lib/router.jsx";
 import { useCart } from "../lib/cart.jsx";
 import { Check, ChevronRight, Minus, Plus, Mark } from "./Icons.jsx";
+import { photoVersion } from "../data/store.js";
 
 export function Logo({ className = "" }) {
   return <img className={"logo " + className} src="brand/rise-logo.svg" alt="Rise, elevate your clean" width="146" height="46" />;
@@ -23,11 +24,14 @@ export function Stepper({ value, min = 1, max = 99, onChange, size = "md", label
 
 // A product photo standing on a soft floor shadow
 export function Bottle({ product, className = "", eager = false, style, sizes = "(max-width: 900px) 32vw, 18vw" }) {
+  const v = photoVersion ? `?v=${photoVersion}` : "";
+  const imgSrc = product.image ? `${product.image}${v}` : undefined;
+  const imgSet = product.imageSet ? product.imageSet.replace(/\.webp/g, `.webp${v}`) : undefined;
   return (
     <div className={"bottle " + className} style={{ "--scale": product.scale, ...style }}>
       <img
-        src={product.image}
-        srcSet={product.imageSet}
+        src={imgSrc}
+        srcSet={imgSet}
         sizes={sizes}
         alt={`${product.name}, ${product.size}`}
         loading={eager ? "eager" : "lazy"}

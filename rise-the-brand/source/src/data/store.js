@@ -21,7 +21,7 @@ export const settings = {
 
   hours: "Monday to Friday, 8 a.m. to 5 p.m.",
 
-  photoVersion: 2,
+  photoVersion: 3,
   socials: {
     instagram: "#",
     facebook: "#",
@@ -29,7 +29,7 @@ export const settings = {
   },
 };
 
-export const photoVersion = 2;
+export const photoVersion = 3;
 
 export const products = [
   {
