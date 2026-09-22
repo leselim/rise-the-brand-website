@@ -66,22 +66,24 @@ export function About() {
         </div>
       </section>
 
-      <section className="section" id="coming" aria-labelledby="coming-title">
-        <div className="wrap split">
-          <div>
-            <h2 className="section-title" id="coming-title">Coming to the range</h2>
-            <p className="prose section-sub">A few more essentials are in the works.</p>
+      {comingSoon.length > 0 && (
+        <section className="section" id="coming" aria-labelledby="coming-title">
+          <div className="wrap split">
+            <div>
+              <h2 className="section-title" id="coming-title">Coming to the range</h2>
+              <p className="prose section-sub">A few more essentials are in the works.</p>
+            </div>
+            <ul className="coming">
+              {comingSoon.map((name) => (
+                <li key={name}>
+                  <span className="coming-name">{name}</span>
+                  <span className="coming-status">Coming soon</span>
+                </li>
+              ))}
+            </ul>
           </div>
-          <ul className="coming">
-            {comingSoon.map((name) => (
-              <li key={name}>
-                <span className="coming-name">{name}</span>
-                <span className="coming-status">Coming soon</span>
-              </li>
-            ))}
-          </ul>
-        </div>
-      </section>
+        </section>
+      )}
 
       <Band
         title="Four essentials, made properly."

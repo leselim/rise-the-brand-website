@@ -42,7 +42,7 @@ export const products = [
     badge: "Best Seller", // set to null to hide the badge
     // Three sizes of the same photo: the browser picks the sharpest one the screen needs
     image: "images/products/multi-purpose-cleaner-large.webp",
-    imageSet: "images/products/multi-purpose-cleaner-medium.webp 401w, images/products/multi-purpose-cleaner-large.webp 803w",
+    imageSet: "images/products/multi-purpose-cleaner-medium.webp 415w, images/products/multi-purpose-cleaner-large.webp 830w",
     thumb: "images/products/multi-purpose-cleaner-thumb.webp",
     // How tall the bottle appears next to the other products (1 is the tallest)
     scale: 1,
@@ -81,7 +81,7 @@ export const products = [
     stock: 40,
     badge: "New",
     image: "images/products/dishwashing-liquid-large.webp",
-    imageSet: "images/products/dishwashing-liquid-medium.webp 399w, images/products/dishwashing-liquid-large.webp 797w",
+    imageSet: "images/products/dishwashing-liquid-medium.webp 401w, images/products/dishwashing-liquid-large.webp 801w",
     thumb: "images/products/dishwashing-liquid-thumb.webp",
     scale: 0.95,
     ghost: "750",
@@ -119,7 +119,7 @@ export const products = [
     stock: 40,
     badge: "New",
     image: "images/products/pine-gel-large.webp",
-    imageSet: "images/products/pine-gel-medium.webp 1174w, images/products/pine-gel-large.webp 2348w",
+    imageSet: "images/products/pine-gel-medium.webp 1340w, images/products/pine-gel-large.webp 2681w",
     thumb: "images/products/pine-gel-thumb.webp",
     scale: 0.42,
     ghost: "1L",
@@ -185,8 +185,9 @@ export const products = [
   },
 ];
 
-// Products on the trade rate sheets that do not have photography on the site yet.
-export const comingSoon = ["Thick Bleach", "Air Freshener", "Cockroach Killer", "Potshiner"];
+// Anything genuinely not on sale yet. The rest of the range is on the trade
+// rate sheets, so it is not "coming soon".
+export const comingSoon = [];
 
 /*
   TRADE RATES

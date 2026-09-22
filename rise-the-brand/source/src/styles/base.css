@@ -13,8 +13,11 @@
 
   /* Surfaces */
   --paper: #f6f4f8;
-  --tile: #ece7f2;
-  --tile-hover: #e4ddee;
+  /* Deepened a step from #ece7f2. The white lids and the white spray trigger
+     were disappearing into the old tile, which sat only a shade off white.
+     Same hue, same family, enough contrast for white plastic to read. */
+  --tile: #e3daf0;
+  --tile-hover: #dbd0ec;
   --line: #e0dae6;
   --line-strong: #c9c1d2;
   --deep: #22143a;

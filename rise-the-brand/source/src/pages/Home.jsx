@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { Link } from "../lib/router.jsx";
 import { useReducedMotion, useScrollProgress } from "../lib/hooks.js";
-import { products, comingSoon, money } from "../data/store.js";
+import { products, money } from "../data/store.js";
 import { ArrowUpRight, ARROWS_PATH, Stars } from "../components/Icons.jsx";
 import { AddButton, Bottle, Marquee } from "../components/ui.jsx";
 
@@ -74,7 +74,12 @@ function Hero() {
               <Link to="/about" className="btn btn-ghost-light">Our story</Link>
             </div>
 
-            <div className="selector" role="tablist" aria-label="Featured product">
+            <div
+              className={"selector" + (products.length > 2 ? " selector-compact" : "")}
+              role="tablist"
+              aria-label="Featured product"
+              style={{ "--sel-count": products.length }}
+            >
               {products.map((q, i) => (
                 <button
                   key={q.id}
@@ -91,7 +96,7 @@ function Hero() {
                     <img src={q.thumb} alt="" style={{ height: `${60 + 30 * q.scale}%` }} />
                   </span>
                   <span className="selector-text">
-                    <span className="selector-name">{q.name}</span>
+                    <span className="selector-name">{q.shortName || q.name}</span>
                     <span className="selector-meta">{q.size}, {money(q.price)}</span>
                   </span>
                   <span className="selector-progress" aria-hidden="true">
@@ -173,7 +178,8 @@ function Range() {
         <div className="section-head">
           <h2 className="section-title" id="shop-title">Shop the range</h2>
           <p className="section-aside">
-            Four essentials for the whole house. {comingSoon.slice(0, -1).join(", ")} and {comingSoon.at(-1)} are on the way.
+            Four essentials for the whole house. Shops and distributors can order the wider range at{" "}
+            <Link to="/trade" className="text-link">trade rates</Link>.
           </p>
         </div>
         <div className="cards">

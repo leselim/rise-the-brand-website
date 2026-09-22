@@ -41,9 +41,15 @@ If the shop should show retail prices instead, change "price" on each
 product in store.js. Nothing else needs to change.
 
 PRODUCT PHOTOS
-Photos must have a transparent background. The site stands each product on
-its own soft floor shadow, so a photo with a white box or a baked in shadow
-will look wrong.
+Photos must have a transparent background, with the studio shadow removed.
+The site stands each product on its own soft floor shadow, so a baked in one
+shows up twice.
+Cutting these out needs care: white lids and white spray triggers are almost
+the same brightness as a white studio backdrop. Anything that removes the
+backdrop by "spreading" from the edge of the photo will find one weak pixel on
+the rim of a lid and erase the whole lid. Cut by brightness instead and then
+fill the enclosed gaps, so a bright highlight in the middle of a lid comes
+back.
 Each photo comes in three sizes in source/public/images/products/:
   large   2400 pixels tall, used on retina screens and for the zoom
   medium  1200 pixels tall, used on phones and standard screens
@@ -65,6 +71,10 @@ to the email address set as orderEmail in store.js.
 When the gateway is ready, add its link to checkoutUrl in the same file.
 
 BRAND
+The product tile behind each photo was deepened from #ece7f2 to #e3daf0.
+White lids were vanishing into the old, almost white tile. Same hue, just
+enough contrast for white plastic to read. It is --tile in base.css.
+
 Primary colour   #824dc1
 Touch point      #688114
 Font             Inter (Google Fonts)

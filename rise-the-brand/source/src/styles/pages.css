@@ -396,3 +396,92 @@
   .form-grid { grid-template-columns: minmax(0, 1fr); }
   .acc-panel p { padding-right: 0; }
 }
+
+/* ---------------------------------------------------------------------------
+   Four products, not two. These rules come last on purpose: they override the
+   two column assumptions baked into the rules above.
+   --------------------------------------------------------------------------- */
+
+/* Hero switcher: one row across, so the four products read as a set rather
+   than a stack. The thumbnails go, because at this width the name and the
+   price are what you actually read. */
+.selector-compact {
+  grid-template-columns: repeat(var(--sel-count, 4), minmax(0, 1fr));
+  column-gap: 16px;
+}
+.selector-compact .selector-thumb { display: none; }
+.selector-compact .selector-item { padding: 18px 10px 6px 0; }
+.selector-compact .selector-item + .selector-item { padding-left: 0; }
+.selector-compact .selector-item + .selector-item .selector-progress { left: 0; }
+.selector-compact .selector-name { font-size: 14px; }
+.selector-compact .selector-meta { margin-top: 3px; font-size: 12.5px; }
+
+@media (max-width: 1100px) {
+  .selector-compact { grid-template-columns: repeat(var(--sel-count, 4), minmax(0, 1fr)); }
+  .selector-compact .selector-item { padding-bottom: 6px; }
+}
+@media (max-width: 900px) {
+  .selector-compact { padding-top: 34px; column-gap: 12px; }
+}
+@media (max-width: 620px) {
+  .selector-compact { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: 4px; }
+  .selector-compact .selector-name { font-size: 13.5px; }
+}
+
+/* Rate tables: a six column price list cannot shrink to a phone, and sideways
+   scrolling hides the total, which is the number people came for. Below this
+   width each row becomes its own card with the column names as labels. */
+@media (max-width: 860px) {
+  .rate-scroll { overflow: visible; }
+  .rate-table { min-width: 0; border: 0; background: transparent; }
+  .rate-table thead { display: none; }
+  .rate-table tbody, .rate-table tr, .rate-table th, .rate-table td { display: block; }
+
+  .rate-table tr {
+    position: relative;
+    background: #fff;
+    border: 1px solid var(--line);
+    padding: 18px 20px;
+  }
+  .rate-table tr + tr { margin-top: 14px; }
+  .rate-table tbody tr:hover { background: #fff; }
+
+  .rate-table .rate-code {
+    padding: 0;
+    border: 0;
+    font-size: 12px;
+    letter-spacing: 0.04em;
+    color: var(--muted);
+  }
+  .rate-table .rate-product {
+    padding: 2px 0 14px;
+    border-bottom: 1px solid var(--line);
+    font-size: 18px;
+    letter-spacing: -0.02em;
+  }
+  .rate-table .rate-product small { margin-top: 4px; }
+
+  .rate-table td:not(.rate-code) {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 20px;
+    padding: 11px 0;
+    border-bottom: 1px solid var(--line);
+    text-align: right;
+  }
+  .rate-table td:not(.rate-code)::before {
+    content: attr(data-label);
+    flex: none;
+    color: var(--ink-2);
+    font-size: 14px;
+    font-weight: 400;
+    text-align: left;
+  }
+  .rate-table tr td:last-child {
+    padding-bottom: 0;
+    border-bottom: 0;
+    font-size: 17px;
+  }
+  .rate-table .rate-options { justify-items: end; gap: 6px; }
+}
