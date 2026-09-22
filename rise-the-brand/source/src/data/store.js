@@ -21,12 +21,15 @@ export const settings = {
 
   hours: "Monday to Friday, 8 a.m. to 5 p.m.",
 
+  photoVersion: 2,
   socials: {
     instagram: "#",
     facebook: "#",
     tiktok: "#",
   },
 };
+
+export const photoVersion = 2;
 
 export const products = [
   {
@@ -81,7 +84,7 @@ export const products = [
     stock: 40,
     badge: "New",
     image: "images/products/dishwashing-liquid-large.webp",
-    imageSet: "images/products/dishwashing-liquid-medium.webp 401w, images/products/dishwashing-liquid-large.webp 801w",
+    imageSet: "images/products/dishwashing-liquid-medium.webp 400w, images/products/dishwashing-liquid-large.webp 800w",
     thumb: "images/products/dishwashing-liquid-thumb.webp",
     scale: 0.95,
     ghost: "750",
@@ -157,7 +160,7 @@ export const products = [
     stock: 32,
     badge: null,
     image: "images/products/footwear-cleaner-large.webp",
-    imageSet: "images/products/footwear-cleaner-medium.webp 290w, images/products/footwear-cleaner-large.webp 581w",
+    imageSet: "images/products/footwear-cleaner-medium.webp 274w, images/products/footwear-cleaner-large.webp 547w",
     thumb: "images/products/footwear-cleaner-thumb.webp",
     scale: 0.7,
     ghost: "200",
