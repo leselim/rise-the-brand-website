@@ -47,7 +47,7 @@ export default function Product({ id }) {
   if (!p) return <NotFound title="We could not find that product." />;
 
   const isFav = favourites.includes(p.id);
-  const others = products.filter((x) => x.id !== p.id);
+  const others = products.filter((x) => x.id !== p.id).slice(0, 2);
   const tabs = [
     { label: "How to use", body: p.howToUse },
     { label: "Benefit", body: p.benefit },

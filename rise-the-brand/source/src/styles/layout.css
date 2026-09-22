@@ -217,7 +217,7 @@
 @media (max-width: 900px) {
   :root { --header-h: 68px; }
   .header-inner { grid-template-columns: 1fr auto; }
-  .nav, .nav-login, .cart-label { display: none; }
+  .nav, .cart-label { display: none; }
   .menu-toggle { display: block; }
   .logo { height: 34px; }
   .cart-button { padding: 0 5px 0 10px; }

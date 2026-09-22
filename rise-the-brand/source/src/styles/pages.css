@@ -84,7 +84,7 @@
 .segmented { position: relative; display: inline-grid; grid-auto-flow: column; grid-auto-columns: 1fr; margin-top: 30px; padding: 4px; background: #fff; border: 1px solid var(--line); max-width: 100%; }
 .segmented button { position: relative; z-index: 1; height: 46px; padding: 0 22px; font-size: 14px; font-weight: 500; color: var(--ink-2); transition: color 0.35s ease; white-space: nowrap; }
 .segmented button[aria-selected="true"] { color: #fff; }
-.segmented-thumb { position: absolute; top: 4px; bottom: 4px; left: 4px; width: calc((100% - 8px) / 2); background: var(--ink); transition: transform 0.55s var(--ease); }
+.segmented-thumb { position: absolute; top: 4px; bottom: 4px; left: 4px; width: calc((100% - 8px) / var(--seg-count, 2)); background: var(--ink); transition: transform 0.55s var(--ease); }
 
 .steps { margin-top: 36px; border-top: 1px solid var(--line); }
 .steps li { display: grid; grid-template-columns: 56px minmax(0, 1fr); gap: 18px; padding: 24px 0; border-bottom: 1px solid var(--line); animation: fadeUp 0.6s var(--ease) both; animation-delay: calc(var(--i) * 90ms); }
@@ -149,7 +149,7 @@
 .page-intro .lead { padding-bottom: 8px; }
 .about-stage { position: relative; aspect-ratio: 16 / 7.4; background: var(--deep); overflow: hidden; }
 .about-stage::before { content: ""; position: absolute; left: 50%; top: 60%; width: 70%; aspect-ratio: 1; transform: translate(-50%, -50%); background: radial-gradient(closest-side, rgba(130, 77, 193, 0.6), rgba(130, 77, 193, 0)); }
-.about-stage-inner { position: absolute; inset: 10% 0 13%; display: flex; align-items: flex-end; justify-content: center; gap: clamp(40px, 9vw, 150px); }
+.about-stage-inner { position: absolute; inset: 10% 0 13%; display: flex; align-items: flex-end; justify-content: center; gap: clamp(16px, 4vw, 72px); padding: 0 clamp(16px, 4vw, 48px); }
 .about-stage .bottle { height: calc(100% * var(--scale, 1)); animation: fadeUp 1.2s var(--ease) both; }
 .about-stage .bottle:nth-child(2) { animation-delay: 0.15s; }
 .about-stage .bottle-floor { background: radial-gradient(closest-side, rgba(8, 3, 16, 0.7), rgba(8, 3, 16, 0)); }
@@ -186,13 +186,6 @@
 .contact-list dt { color: var(--muted); }
 .contact-list a { color: var(--primary); }
 
-/* Login */
-.auth { max-width: 520px; margin: 0 auto var(--section); padding: clamp(32px, 5vw, 56px); background: #fff; border: 1px solid var(--line); }
-.auth h1 { font-size: clamp(36px, 3.6vw, 48px); letter-spacing: -0.045em; }
-.auth > p { margin-top: 10px; color: var(--ink-2); }
-.auth .field { margin-top: 20px; }
-.auth .btn { margin-top: 28px; }
-
 /* Checkout */
 .checkout { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: var(--gap); align-items: start; padding-bottom: var(--section); }
 .checkout-form .lead { margin-top: 12px; }
@@ -218,6 +211,90 @@
 .done-actions { display: flex; flex-wrap: wrap; gap: 12px; }
 .done-icon { width: 56px; height: 56px; margin-bottom: 28px; display: grid; place-items: center; border-radius: 50%; background: var(--touch); color: #fff; }
 .done-icon .icon { width: 24px; height: 24px; }
+
+/* Trade rates */
+.rate-switch { margin-top: 0; }
+.rate-panel[hidden] { display: none; }
+
+.rate-block { margin-top: clamp(32px, 4vw, 52px); }
+.rate-head { max-width: 62ch; }
+.rate-title { font-size: clamp(26px, 2.8vw, 40px); letter-spacing: -0.04em; }
+.rate-blurb { margin-top: 12px; color: var(--ink-2); }
+
+.rate-scroll { margin-top: clamp(24px, 3vw, 36px); overflow-x: auto; overscroll-behavior-x: contain; }
+.rate-table { width: 100%; min-width: 760px; border-collapse: collapse; background: #fff; border: 1px solid var(--line); font-variant-numeric: tabular-nums; }
+.rate-table th, .rate-table td { padding: 16px 20px; text-align: left; border-bottom: 1px solid var(--line); vertical-align: top; }
+.rate-table thead th {
+  position: sticky; top: 0; z-index: 1;
+  background: var(--primary); color: #fff;
+  font-size: 13px; font-weight: 600; letter-spacing: 0.01em; line-height: 1.35;
+  border-bottom: 0; white-space: nowrap;
+}
+.rate-table tbody tr:last-child th, .rate-table tbody tr:last-child td { border-bottom: 0; }
+.rate-table tbody tr:hover { background: var(--paper); }
+.rate-table .num { text-align: right; white-space: nowrap; }
+.rate-code { color: var(--muted); font-size: 14px; }
+.rate-product { font-weight: 600; font-size: 15px; letter-spacing: -0.01em; }
+.rate-product small { display: block; margin-top: 3px; font-size: 13px; font-weight: 400; color: var(--muted); }
+.rate-total { font-weight: 600; color: var(--touch-ink); }
+
+/* Courier and total cells that carry a Pudo and a Doorstep price */
+.rate-options { display: inline-grid; gap: 4px; justify-items: end; }
+.rate-option { display: flex; gap: 10px; align-items: baseline; }
+.rate-option-label { font-size: 12px; color: var(--muted); }
+
+.rate-note {
+  margin-top: 18px; padding: 16px 20px;
+  background: var(--primary-soft); color: var(--ink);
+  font-size: 14px; max-width: 86ch;
+}
+
+/* Application form */
+.trade-form { display: grid; grid-template-columns: minmax(0, 4fr) minmax(0, 7fr); gap: var(--gap); align-items: start; }
+.trade-form-intro { position: sticky; top: calc(var(--header-h) + 24px); }
+.trade-form form { background: #fff; border: 1px solid var(--line); padding: clamp(24px, 3.2vw, 44px); }
+
+.trade-choice { margin: 0 0 30px; padding: 0; border: 0; }
+.trade-choice legend { padding: 0; margin-bottom: 14px; font-size: 13px; font-weight: 500; }
+.trade-choice-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+.trade-card {
+  position: relative; display: block; cursor: pointer;
+  padding: 20px; background: var(--paper); border: 1px solid var(--line-strong);
+  transition: border-color 0.25s ease, background-color 0.25s ease;
+}
+.trade-card:hover { border-color: var(--ink); }
+.trade-card input { position: absolute; opacity: 0; width: 0; height: 0; }
+.trade-card-name { display: block; font-weight: 600; font-size: 16px; letter-spacing: -0.01em; }
+.trade-card-detail { display: block; margin-top: 6px; font-size: 14px; color: var(--ink-2); }
+.trade-card.is-on { background: var(--primary-soft); border-color: var(--primary); }
+.trade-card.is-on .trade-card-name { color: var(--primary); }
+.trade-card:has(input:focus-visible) { outline: 2px solid var(--primary); outline-offset: 3px; }
+
+.trade-form .form-grid { margin: 0 0 28px; }
+.field-hint { font-size: 13px; color: var(--muted); }
+.form-foot { margin-top: 18px; font-size: 14px; color: var(--ink-2); }
+.form-foot a { color: var(--primary); }
+
+@media (max-width: 1100px) {
+  .trade-form { grid-template-columns: minmax(0, 1fr); }
+  .trade-form-intro { position: static; }
+}
+
+@media (max-width: 560px) {
+  .trade-choice-grid { grid-template-columns: minmax(0, 1fr); }
+  .rate-table { min-width: 640px; }
+}
+
+/* Printing a price list should give a clean sheet, both lists, no chrome */
+@media print {
+  .site-header, .site-footer, .band, .buy-bar, .drawer, .breadcrumb,
+  .rate-switch, .trade-form, .skip-link { display: none !important; }
+  .rate-panel[hidden] { display: block !important; }
+  .rate-scroll { overflow: visible; }
+  .rate-table { min-width: 0; border-color: #999; }
+  .rate-table thead th { background: #fff; color: #000; border-bottom: 1.5px solid #000; }
+  .rate-note { background: #fff; border: 1px solid #999; }
+}
 
 /* Responsive */
 @media (max-width: 1100px) {
@@ -302,6 +379,13 @@
   .stage-title { font-size: clamp(120px, 7vw, 160px); }
   .stage-text { font-size: 19px; }
   .selector-name { font-size: 16px; }
+}
+
+@media (max-width: 720px) {
+  .segmented-many { display: grid; width: 100%; grid-auto-flow: row; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .segmented-many button { padding: 0 12px; }
+  .segmented-many .segmented-thumb { display: none; }
+  .segmented-many button[aria-selected="true"] { background: var(--ink); color: #fff; }
 }
 
 @media (max-width: 560px) {

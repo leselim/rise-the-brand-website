@@ -38,7 +38,7 @@ export function About() {
           <h2 className="section-title" id="story-title">Why we started small.</h2>
           <div className="prose">
             <p>A cleaning cupboard fills up fast. A spray for this, a liquid for that, and a few half used bottles nobody remembers buying. We wanted to change that.</p>
-            <p>So Rise begins with two products that solve everyday problems well. A Multi Purpose Cleaner for surfaces all around the house, and a Footwear Cleaner that brings tired sneakers back to life. We are putting our energy into getting these right before we add anything else.</p>
+            <p>So the range stays tight. A Multi Purpose Cleaner for surfaces all around the house, a Pine Gel for floors, a Dishwashing Liquid for the sink, and a Footwear Cleaner that brings tired sneakers back to life. Four products that cover most of what a household actually cleans.</p>
             <p>When a new product joins the range, it will be because it genuinely makes cleaning at home easier.</p>
           </div>
         </div>
@@ -84,8 +84,8 @@ export function About() {
       </section>
 
       <Band
-        title="Two essentials, made properly."
-        text="Start with the Multi Purpose Cleaner and the Footwear Cleaner."
+        title="Four essentials, made properly."
+        text="Everything a household cleans most, without a cupboard full of bottles."
         cta={<Link to="/" section="shop" className="btn btn-ghost-light">Shop the range</Link>}
       />
     </>
@@ -98,8 +98,9 @@ const FAQ = [
   { q: "How long does delivery take?", a: "Most orders arrive within 3 to 5 working days in main centres, and within 5 to 7 working days in outlying areas." },
   { q: "Can I use the Footwear Cleaner on any shoe?", a: "It is made for sneakers and everyday shoes. On suede, nubuck or delicate materials, test a small hidden area first." },
   { q: "Are your products safe around children and pets?", a: "Use every product as directed on the label and store it out of reach of children and pets. Keep them away from surfaces until they are dry." },
-  { q: "Can I order in bulk for my business?", a: "Yes. Email us with the products and quantities you need and we will send you a quote." },
+  { q: "Can I order in bulk for my business?", a: "Yes. Our reseller and distributor rates are on the Trade rates page, along with the form to apply." },
   { q: "Do I need an account to order?", a: "No. Add products to your cart and check out. Your cart is saved on your device while you shop." },
+  { q: "How do I become a distributor or reseller?", a: "Fill in the form on the Trade rates page. We come back to you within one working day with stock availability and payment details." },
 ];
 
 const HELP_SECTIONS = [
@@ -173,7 +174,7 @@ export function Help() {
               </div>
               <div>
                 <dt>Stockists and bulk orders</dt>
-                <dd>Email us and we will reply within one working day.</dd>
+                <dd>See the <Link to="/trade">trade rates</Link>, or apply using the form on that page.</dd>
               </div>
             </dl>
           </section>
@@ -187,38 +188,6 @@ export function Help() {
           </section>
         </div>
       </div>
-    </div>
-  );
-}
-
-/* Login */
-export function Login() {
-  useTitle("Login | Rise The Brand");
-  const [note, setNote] = useState("");
-  return (
-    <div className="wrap">
-      <Breadcrumb items={[{ label: "Home", to: "/" }, { label: "Login" }]} />
-      <section className="auth">
-        <h1>Sign in</h1>
-        <p>Use your email address and password to view your orders.</p>
-        <form
-          onSubmit={(e) => {
-            e.preventDefault();
-            setNote("Customer accounts are not open yet. You can still shop as normal, and your cart is saved on this device.");
-          }}
-        >
-          <div className="field">
-            <label htmlFor="login-email">Email address</label>
-            <input id="login-email" type="email" autoComplete="email" required />
-          </div>
-          <div className="field">
-            <label htmlFor="login-password">Password</label>
-            <input id="login-password" type="password" autoComplete="current-password" required />
-          </div>
-          <button className="btn btn-primary btn-block btn-lg" type="submit">Sign in</button>
-          {note && <p className="form-note" role="status">{note}</p>}
-        </form>
-      </section>
     </div>
   );
 }

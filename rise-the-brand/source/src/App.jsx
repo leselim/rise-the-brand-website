@@ -6,7 +6,8 @@ import Footer from "./components/Footer.jsx";
 import CartDrawer from "./components/CartDrawer.jsx";
 import Home from "./pages/Home.jsx";
 import Product from "./pages/Product.jsx";
-import { About, Help, Login, Checkout, NotFoundPage } from "./pages/Pages.jsx";
+import Trade from "./pages/Trade.jsx";
+import { About, Help, Checkout, NotFoundPage } from "./pages/Pages.jsx";
 
 function Screen() {
   const { path } = useRoute();
@@ -21,7 +22,7 @@ function Screen() {
   else if (productId) page = <Product id={productId} />;
   else if (path === "/about") page = <About />;
   else if (path === "/help") page = <Help />;
-  else if (path === "/login") page = <Login />;
+  else if (path === "/trade") page = <Trade />;
   else if (path === "/checkout") page = <Checkout />;
   else page = <NotFoundPage />;
 

@@ -41,7 +41,6 @@ export default function Footer() {
               <li><Link to="/help" section="shipping">Shipping</Link></li>
               <li><Link to="/help" section="returns">Return Policy</Link></li>
               <li><Link to="/help" section="contact">Contact</Link></li>
-              <li><Link to="/login">My Account</Link></li>
             </ul>
           </div>
 
@@ -51,7 +50,8 @@ export default function Footer() {
               <li><Link to="/about">About us</Link></li>
               <li><Link to="/about" section="believe">What we believe</Link></li>
               <li><Link to="/about" section="coming">Coming soon</Link></li>
-              <li><Link to="/help" section="contact">Bulk orders</Link></li>
+              <li><Link to="/trade">Trade rates</Link></li>
+              <li><Link to="/trade" section="apply">Become a distributor</Link></li>
             </ul>
           </div>
 

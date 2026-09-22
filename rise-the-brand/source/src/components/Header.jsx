@@ -106,11 +106,11 @@ export default function Header() {
             </div>
           </div>
           <Link to="/about" className="nav-link" aria-current={current("/about")}>About</Link>
+          <Link to="/trade" className="nav-link" aria-current={current("/trade")}>Trade</Link>
           <Link to="/help" className="nav-link" aria-current={current("/help")}>Help</Link>
         </nav>
 
         <div className="header-actions">
-          <Link to="/login" className="nav-link nav-login" aria-current={current("/login")}>Login</Link>
           <button type="button" className={"cart-button" + (pulse ? " is-pulse" : "")} onClick={() => setOpen(true)} aria-label={`Open cart, ${count} items`}>
             <Bag />
             <span className="cart-label">Cart</span>
@@ -139,8 +139,8 @@ export default function Header() {
             </Link>
           ))}
           <Link to="/about" tabIndex={menuOpen ? 0 : -1}>About</Link>
+          <Link to="/trade" tabIndex={menuOpen ? 0 : -1}>Trade rates</Link>
           <Link to="/help" tabIndex={menuOpen ? 0 : -1}>Help Desk</Link>
-          <Link to="/login" tabIndex={menuOpen ? 0 : -1}>Login</Link>
         </nav>
       </div>
     </header>

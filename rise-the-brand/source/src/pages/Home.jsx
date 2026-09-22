@@ -67,7 +67,7 @@ function Hero() {
               <span className="line"><span>clean.</span></span>
             </h1>
             <p className="stage-text">
-              Hardworking cleaning products for South African homes. One spray for every surface, one foam for every pair of shoes.
+              Hardworking cleaning products for South African homes. Surfaces, floors, dishes and the shoes at the door.
             </p>
             <div className="stage-actions">
               <Link to="/" section="shop" className="btn btn-primary">Shop the range</Link>
@@ -173,7 +173,7 @@ function Range() {
         <div className="section-head">
           <h2 className="section-title" id="shop-title">Shop the range</h2>
           <p className="section-aside">
-            Two essentials for now. {comingSoon.join(" and ")} are on the way.
+            Four essentials for the whole house. {comingSoon.slice(0, -1).join(", ")} and {comingSoon.at(-1)} are on the way.
           </p>
         </div>
         <div className="cards">
@@ -203,10 +203,15 @@ function HowItWorks() {
         </div>
         <div className="how-copy">
           <h2 className="section-title" id="how-title">Three steps to a better clean.</h2>
-          <div className="segmented" role="tablist" aria-label="Choose a product">
+          <div
+            className="segmented segmented-many"
+            role="tablist"
+            aria-label="Choose a product"
+            style={{ "--seg-count": products.length }}
+          >
             {products.map((q, i) => (
               <button key={q.id} type="button" role="tab" aria-selected={i === active} onClick={() => setActive(i)}>
-                {q.name}
+                {q.shortName || q.name}
               </button>
             ))}
             <span className="segmented-thumb" style={{ transform: `translateX(${active * 100}%)` }} aria-hidden="true" />
@@ -233,7 +238,7 @@ function HowItWorks() {
 }
 
 const STATEMENT =
-  "Rise is a proudly South African brand. We make cleaning products for homes that are lived in, and we keep the range small so every bottle earns its place.";
+  "Rise is a proudly South African brand. We make cleaning products for homes that are lived in, and we keep the range tight so every bottle earns its place.";
 
 function AboutTeaser() {
   const [ref, progress] = useScrollProgress();
@@ -257,7 +262,7 @@ function AboutTeaser() {
           </div>
           <div className="value">
             <h3>Fewer, better</h3>
-            <p>We would rather make two products you trust than twenty you forget.</p>
+            <p>We would rather make four products you trust than twenty you forget.</p>
           </div>
           <div className="value">
             <h3>Simple to use</h3>
@@ -274,7 +279,7 @@ export default function Home() {
   return (
     <>
       <Hero />
-      <Marquee items={["Multi Purpose Cleaner", "Footwear Cleaner", "Proudly South African", "elevate your clean"]} />
+      <Marquee items={["Multi Purpose Cleaner", "Pine Gel", "Dishwashing Liquid", "Footwear Cleaner", "Proudly South African", "elevate your clean"]} />
       <Range />
       <HowItWorks />
       <AboutTeaser />
