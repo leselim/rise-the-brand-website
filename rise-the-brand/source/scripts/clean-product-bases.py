@@ -1,114 +1,132 @@
-import os
-import glob
+"""
+Remove the leftover studio reflection from the base of each product photo.
+
+Every bottle was shot standing on a white sweep, which leaves a pale band of
+reflection just under the base. On the dark hero that band shows up as a white
+smear under the product. The site draws its own floor shadow (.bottle-floor),
+so the baked in one is not wanted at all.
+
+The band is pale AND colourless, while the base of every Rise product is
+strongly coloured plastic, so the two are easy to tell apart. This only looks
+at the bottom of each image, so nothing near a white lid is at risk.
+
+It works on the -large file of each product and then rebuilds -medium and
+-thumb from that one cleaned master, so all three stay in exact proportion.
+Cleaning the three sizes separately would leave each with a slightly different
+crop, and the site scales products by height, so they would no longer line up
+next to each other.
+
+Run from rise-the-brand/source:
+    python3 scripts/clean-product-bases.py
+"""
+import pathlib
+import sys
+
 import numpy as np
 from PIL import Image
-from scipy.ndimage import label, binary_fill_holes
+from scipy import ndimage
 
-def clean_product_image(large_path):
-    # Load original master image
-    img = Image.open(large_path).convert("RGBA")
-    arr = np.array(img).copy()
-    h, w, _ = arr.shape
+IMAGES = pathlib.Path("public/images/products")
+ZONE = 0.16        # only the bottom sixth of the picture
+PALE_LUM = 140     # brighter than this
+NEUTRAL_SAT = 70   # and this close to grey = reflection, not product
+FEATHER = 1.2      # soften the new bottom edge
+TEXT_MAX_W = 0.30  # an enclosed gap narrower than this much of the image
+TEXT_MAX_H = 0.10  # and shorter than this much of it, is printed text
+MIN_BASE_SAT = 55  # a base row greyer than this is reflection, not plastic
+MAX_BASE_TRIM = 0.03  # never take more than this much off the bottom
 
-    # Only inspect the bottom sixth of the image
-    bottom_start = h * 5 // 6
-    bottom_arr = arr[bottom_start:, :, :]
 
-    r = bottom_arr[:, :, 0].astype(float)
-    g = bottom_arr[:, :, 1].astype(float)
-    b = bottom_arr[:, :, 2].astype(float)
-    a = bottom_arr[:, :, 3].astype(float)
+SIZES = (("large", 2400), ("medium", 1200), ("thumb", 360))
 
-    min_rgb = np.minimum(np.minimum(r, g), b)
-    max_rgb = np.maximum(np.maximum(r, g), b)
-    diff_rgb = max_rgb - min_rgb
 
-    # Identify pale / white studio reflection pixels
-    is_pale = (min_rgb > 125) & (diff_rgb < 45) & (a > 5)
-    is_bg = (a <= 15)
+def clean(path):
+    im = Image.open(path).convert("RGBA")
+    a = np.asarray(im).astype(np.int16)
+    rgb, alpha = a[:, :, :3], a[:, :, 3].astype(np.float32)
+    h = a.shape[0]
 
-    # Seed flood-fill from background & image border pixels in the bottom region
-    edge_mask = np.zeros((h - bottom_start, w), dtype=bool)
-    edge_mask[-1, :] = True
-    edge_mask[:, 0] = True
-    edge_mask[:, -1] = True
+    lum = rgb.min(axis=2)
+    sat = rgb.max(axis=2) - rgb.min(axis=2)
 
-    seed = is_bg | (edge_mask & (is_pale | (a < 100)))
-    mask_passable = is_bg | is_pale
+    zone = np.zeros(a.shape[:2], dtype=bool)
+    zone[int(h * (1 - ZONE)):, :] = True
 
-    # Connected component labeling to remove reflection connected to empty space
-    labeled, _ = label(mask_passable)
-    bg_labels = set(labeled[seed])
-    bg_labels.discard(0)
+    pale = zone & (alpha > 0) & (lum > PALE_LUM) & (sat < NEUTRAL_SAT)
+    if not pale.any():
+        return 0, im
 
-    remove_mask = np.isin(labeled, list(bg_labels)) & is_pale
+    # The volume printed on the label ("750ml", "1 Litre") is also pale and
+    # colourless and also sits low on the bottle. The difference is that the
+    # text is surrounded by coloured plastic, while the reflection runs out
+    # into empty space. So drop the pale pixels, then fill any enclosed gap
+    # straight back in, which returns the text and keeps the reflection gone.
+    kept = (alpha > 0) & ~pale
 
-    # Put back small enclosed gaps (e.g., text counter-spaces)
-    preserved_mask = ~remove_mask & (a > 10)
-    filled_preserved = binary_fill_holes(preserved_mask)
-    holes_to_restore = filled_preserved & ~preserved_mask
-    remove_mask[holes_to_restore] = False
+    # Restore only SMALL enclosed gaps. Printed text is a few narrow glyphs;
+    # a strip of reflection trapped under the base of a tub is wide and flat,
+    # and filling that back in is what puts the smear straight back.
+    holes = ndimage.binary_fill_holes(kept) & ~kept
+    lab, n = ndimage.label(holes)
+    for idx, sl in enumerate(ndimage.find_objects(lab), start=1):
+        hh = sl[0].stop - sl[0].start
+        ww = sl[1].stop - sl[1].start
+        if ww < a.shape[1] * TEXT_MAX_W and hh < h * TEXT_MAX_H:
+            kept |= lab == idx
 
-    # Apply alpha removal to cleaned array
-    arr_bottom_alpha = arr[bottom_start:, :, 3]
-    arr_bottom_alpha[remove_mask] = 0
+    # The last rows where the base meets the reflection are a ragged mix of
+    # plastic and backdrop, too coloured for the test above to catch but still
+    # visibly pale. Walk up from the bottom and drop rows until one is clean.
+    rows = np.where(kept.any(axis=1))[0]
+    if len(rows):
+        bottom = rows.max()
+        limit = int(h * MAX_BASE_TRIM)
+        while bottom > rows.min() and (rows.max() - bottom) < limit:
+            row = kept[bottom]
+            if not row.any():
+                break
+            # A row of the reflection is grey. A row of the product is the
+            # colour of the plastic it is moulded from. Median saturation
+            # tells them apart far more sharply than brightness does.
+            if float(np.median(sat[bottom][row])) >= MIN_BASE_SAT:
+                break
+            kept[bottom] = False
+            bottom -= 1
 
-    # Crop tight bounding box around non-transparent pixels
-    non_zero_y, non_zero_x = np.where(arr[:, :, 3] > 10)
-    xmin, xmax = non_zero_x.min(), non_zero_x.max()
-    ymin, ymax = non_zero_y.min(), non_zero_y.max()
+    removed = int(((alpha > 0) & ~kept).sum())
+    alpha[~kept] = 0.0
+    alpha = ndimage.gaussian_filter(alpha, FEATHER)
 
-    cleaned_master = Image.fromarray(arr).crop((xmin, ymin, xmax + 1, ymax + 1))
-    new_w, new_h = cleaned_master.size
+    out = Image.fromarray(np.dstack([rgb, alpha]).astype(np.uint8), "RGBA")
 
-    # Base directory and product name
-    base_dir = os.path.dirname(large_path)
-    base_name = os.path.basename(large_path).replace("-large.webp", "")
+    # re-crop, since the picture is usually shorter now
+    aa = np.asarray(out)[:, :, 3]
+    ys, xs = np.where(aa > 6)
+    out = out.crop((xs.min(), ys.min(), xs.max() + 1, ys.max() + 1))
+    return removed, out
 
-    # Save cleaned large master
-    large_out_path = os.path.join(base_dir, f"{base_name}-large.webp")
-    cleaned_master.save(large_out_path, format="WEBP", quality=95)
-    print(f"{base_name}-large.webp: width {new_w}px (height {new_h}px)")
-
-    # Save medium version (50% scale)
-    med_w = round(new_w * 0.5)
-    med_h = round(new_h * 0.5)
-    medium_img = cleaned_master.resize((med_w, med_h), Image.Resampling.LANCZOS)
-    medium_out_path = os.path.join(base_dir, f"{base_name}-medium.webp")
-    medium_img.save(medium_out_path, format="WEBP", quality=92)
-    print(f"{base_name}-medium.webp: width {med_w}px (height {med_h}px)")
-
-    # Save thumb version (15% scale)
-    thumb_w = round(new_w * 0.15)
-    thumb_h = round(new_h * 0.15)
-    thumb_img = cleaned_master.resize((thumb_w, thumb_h), Image.Resampling.LANCZOS)
-    thumb_out_path = os.path.join(base_dir, f"{base_name}-thumb.webp")
-    thumb_img.save(thumb_out_path, format="WEBP", quality=90)
-    print(f"{base_name}-thumb.webp: width {thumb_w}px (height {thumb_h}px)")
-
-    return {
-        "id": base_name,
-        "large_width": new_w,
-        "medium_width": med_w,
-        "thumb_width": thumb_w,
-    }
-
-def main():
-    products_dir = os.path.join(os.path.dirname(__file__), "..", "public", "images", "products")
-    large_files = sorted(glob.glob(os.path.join(products_dir, "*-large.webp")))
-
-    if not large_files:
-        print("No *-large.webp files found in", products_dir)
-        return
-
-    results = []
-    for filepath in large_files:
-        res = clean_product_image(filepath)
-        results.append(res)
-
-    print("\n--- Summary of New Widths ---")
-    for r in results:
-        print(f"{r['id']}: medium = {r['medium_width']}w, large = {r['large_width']}w (thumb = {r['thumb_width']}px)")
 
 if __name__ == "__main__":
-    main()
+    if not IMAGES.is_dir():
+        sys.exit(f"Run this from rise-the-brand/source. Not found: {IMAGES}")
+
+    masters = sorted(IMAGES.glob("*-large.webp"))
+    if not masters:
+        sys.exit(f"No -large.webp masters in {IMAGES}")
+
+    print("file                          removed px   rebuilt sizes")
+    for master in masters:
+        stem = master.name[: -len("-large.webp")]
+        removed, cleaned = clean(master)
+        built = []
+        for label, height in SIZES:
+            width = max(1, round(cleaned.width * height / cleaned.height))
+            target = IMAGES / f"{stem}-{label}.webp"
+            cleaned.resize((width, height), Image.LANCZOS).save(
+                target, "WEBP", quality=90, method=6, exact=True
+            )
+            built.append(f"{width}x{height}")
+        print(f"  {stem:26} {removed:9d}   {'  '.join(built)}")
+
+    print("\nNow bump photoVersion in src/data/store.js and update the srcset")
+    print("widths there to match the rebuilt sizes above.")

@@ -21,7 +21,7 @@ export const settings = {
 
   hours: "Monday to Friday, 8 a.m. to 5 p.m.",
 
-  photoVersion: 3,
+  photoVersion: 5,
   socials: {
     instagram: "#",
     facebook: "#",
@@ -29,7 +29,7 @@ export const settings = {
   },
 };
 
-export const photoVersion = 3;
+export const photoVersion = 5;
 
 export const products = [
   {
@@ -45,7 +45,7 @@ export const products = [
     badge: "Best Seller", // set to null to hide the badge
     // Three sizes of the same photo: the browser picks the sharpest one the screen needs
     image: "images/products/multi-purpose-cleaner-large.webp",
-    imageSet: "images/products/multi-purpose-cleaner-medium.webp 415w, images/products/multi-purpose-cleaner-large.webp 830w",
+    imageSet: "images/products/multi-purpose-cleaner-medium.webp 416w, images/products/multi-purpose-cleaner-large.webp 833w",
     thumb: "images/products/multi-purpose-cleaner-thumb.webp",
     // How tall the bottle appears next to the other products (1 is the tallest)
     scale: 1,
@@ -84,7 +84,7 @@ export const products = [
     stock: 40,
     badge: "New",
     image: "images/products/dishwashing-liquid-large.webp",
-    imageSet: "images/products/dishwashing-liquid-medium.webp 400w, images/products/dishwashing-liquid-large.webp 800w",
+    imageSet: "images/products/dishwashing-liquid-medium.webp 401w, images/products/dishwashing-liquid-large.webp 802w",
     thumb: "images/products/dishwashing-liquid-thumb.webp",
     scale: 0.95,
     ghost: "750",
@@ -122,7 +122,7 @@ export const products = [
     stock: 40,
     badge: "New",
     image: "images/products/pine-gel-large.webp",
-    imageSet: "images/products/pine-gel-medium.webp 1340w, images/products/pine-gel-large.webp 2681w",
+    imageSet: "images/products/pine-gel-medium.webp 1346w, images/products/pine-gel-large.webp 2691w",
     thumb: "images/products/pine-gel-thumb.webp",
     scale: 0.42,
     ghost: "1L",
@@ -160,7 +160,7 @@ export const products = [
     stock: 32,
     badge: null,
     image: "images/products/footwear-cleaner-large.webp",
-    imageSet: "images/products/footwear-cleaner-medium.webp 274w, images/products/footwear-cleaner-large.webp 547w",
+    imageSet: "images/products/footwear-cleaner-medium.webp 279w, images/products/footwear-cleaner-large.webp 558w",
     thumb: "images/products/footwear-cleaner-thumb.webp",
     scale: 0.7,
     ghost: "200",
