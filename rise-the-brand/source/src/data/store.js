@@ -43,6 +43,7 @@ export const products = [
     category: "All surfaces",
     size: "750 ml",
     price: 90,
+    bulk: { price: 42.5, from: 12 }, // per unit when buying this many or more
     rating: 4.8, // set to null to hide the stars
     purchased: 124, // set to null to hide the purchase count
     stock: 40,
@@ -83,6 +84,7 @@ export const products = [
     category: "Kitchen",
     size: "750 ml",
     price: 29,
+    bulk: { price: 25, from: 10 }, // per unit when buying this many or more
     rating: 4.8,
     purchased: null,
     stock: 40,
@@ -121,6 +123,7 @@ export const products = [
     category: "Floors",
     size: "1 L",
     price: 42,
+    bulk: { price: 38, from: 10 }, // per unit when buying this many or more
     rating: 4.9,
     purchased: null,
     stock: 40,
@@ -159,6 +162,7 @@ export const products = [
     category: "Shoe care",
     size: "200 ml",
     price: 90,
+    bulk: { price: 43.33, from: 12 }, // per unit when buying this many or more
     rating: 4.7,
     purchased: 86,
     stock: 32,
@@ -278,6 +282,12 @@ export const provinces = [
 ];
 
 export const findProduct = (id) => products.find((p) => p.id === id);
+
+/* Price per unit for a quantity: the bulk price kicks in from product.bulk.from units. */
+export const unitPrice = (product, qty) =>
+  product.bulk && qty >= product.bulk.from ? product.bulk.price : product.price;
+
+export const lineTotal = (product, qty) => Math.round(unitPrice(product, qty) * qty * 100) / 100;
 
 export const money = (n) =>
   settings.currency + (Number.isInteger(n) ? n : n.toFixed(2));

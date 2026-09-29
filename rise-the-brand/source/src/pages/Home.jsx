@@ -163,7 +163,10 @@ export function ProductCard({ product: p }) {
           </div>
         </div>
         <div className="card-buy">
-          <p className="card-price">{money(p.price)}</p>
+          <p className="card-price">
+            {money(p.price)}
+            {p.bulk && <small className="card-bulk">{money(p.bulk.price)} each from {p.bulk.from}</small>}
+          </p>
           <AddButton product={p} className="btn btn-dark btn-sm" />
         </div>
       </div>

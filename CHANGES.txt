@@ -53,3 +53,14 @@ TO PUBLISH
    (box of 12), Dishwashing R25, Pine Gel R38, Footwear Cleaner R43.33.
    The earlier "why it changed" explainer was removed from /rate-sheets because
    its numbers no longer apply.
+
+8. Bulk pricing on the website
+   Each product now has an individual price and a bulk price in store.js:
+     Multi Purpose Cleaner 750 ml   R90 each,  R42.50 each from 12
+     Footwear Cleaner 200 ml        R90 each,  R43.33 each from 12
+     Dishwashing Liquid 750 ml      R29 each,  R25 each from 10
+     Pine Gel                       R42 each,  R38 each from 10
+   The bulk price is shown on product cards and product pages, and the cart,
+   checkout and order email apply it automatically once the quantity reaches
+   the bulk threshold. New helpers: unitPrice() and lineTotal() in store.js.
+   Change the threshold per product via bulk.from.

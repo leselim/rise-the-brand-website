@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Link } from "../lib/router.jsx";
 import { useCart } from "../lib/cart.jsx";
 import { useInView, usePassed } from "../lib/hooks.js";
-import { products, findProduct, money, returnPolicy, settings } from "../data/store.js";
+import { lineTotal, products, findProduct, money, returnPolicy, settings } from "../data/store.js";
 import { Arrow, Bookmark, Stars, Tag } from "../components/Icons.jsx";
 import { AddButton, Band, Breadcrumb, Bottle, Stepper, Tabs } from "../components/ui.jsx";
 import NotFound from "./NotFound.jsx";
@@ -80,6 +80,11 @@ export default function Product({ id }) {
 
             <div className="pd-price">
               <span className="price-lg">{money(p.price)}</span>
+              {p.bulk && (
+                <span className="price-note">
+                  {money(p.bulk.price)} each when you buy {p.bulk.from} or more
+                </span>
+              )}
               {settings.installments > 0 && (
                 <span className="price-note">
                   Or {settings.installments} easy payments of {money(Math.round((p.price / settings.installments) * 100) / 100)}
@@ -103,7 +108,7 @@ export default function Product({ id }) {
               <span className="option-label">
                 <input type="radio" name="purchase" defaultChecked /> One time purchase
               </span>
-              <span className="option-price">{money(p.price * qty)}</span>
+              <span className="option-price">{money(lineTotal(p, qty))}</span>
             </label>
 
             <div className="pd-actions" ref={buyRef}>
@@ -175,7 +180,7 @@ export default function Product({ id }) {
       <div className={"buy-bar" + (buyPassed && !footInView ? " is-visible" : "")} aria-hidden={!buyPassed || footInView}>
         <div className="buy-bar-info">
           <span className="buy-bar-name">{p.name}</span>
-          <span className="buy-bar-price">{money(p.price * qty)}</span>
+          <span className="buy-bar-price">{money(lineTotal(p, qty))}</span>
         </div>
         <button type="button" className="btn btn-primary" onClick={() => add(p.id, qty)} tabIndex={buyPassed && !footInView ? 0 : -1}>
           Add to cart

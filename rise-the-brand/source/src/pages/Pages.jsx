@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { saveToSheet } from "../lib/signup.js";
 import { Link, useRoute } from "../lib/router.jsx";
 import { useCart } from "../lib/cart.jsx";
-import { products, comingSoon, money, provinces, returnPolicy, settings } from "../data/store.js";
+import { lineTotal, unitPrice, products, comingSoon, money, provinces, returnPolicy, settings } from "../data/store.js";
 import { Check } from "../components/Icons.jsx";
 import { Accordion, Band, Bottle, Breadcrumb } from "../components/ui.jsx";
 
@@ -248,7 +248,7 @@ export function Checkout() {
       "",
       "I would like to place this order:",
       "",
-      ...lines.map((l) => `${l.qty} x ${l.product.name} (${l.product.size})   ${money(l.qty * l.product.price)}`),
+      ...lines.map((l) => `${l.qty} x ${l.product.name} (${l.product.size}) @ ${money(unitPrice(l.product, l.qty))}   ${money(lineTotal(l.product, l.qty))}`),
       "",
       `Subtotal: ${money(subtotal)}`,
       "",
@@ -358,7 +358,7 @@ export function Checkout() {
                   {p.name}
                   <small>{p.size}</small>
                 </span>
-                <span className="summary-price">{money(p.price * qty)}</span>
+                <span className="summary-price">{money(lineTotal(p, qty))}</span>
               </li>
             ))}
           </ul>

@@ -2,7 +2,7 @@ import { useEffect, useRef } from "react";
 import { useCart } from "../lib/cart.jsx";
 import { useLockBody } from "../lib/hooks.js";
 import { Link, navigate, useRoute } from "../lib/router.jsx";
-import { money } from "../data/store.js";
+import { lineTotal, money } from "../data/store.js";
 import { Close } from "./Icons.jsx";
 import { Stepper } from "./ui.jsx";
 
@@ -90,7 +90,7 @@ export default function CartDrawer() {
                       </button>
                     </div>
                   </div>
-                  <p className="line-price">{money(p.price * qty)}</p>
+                  <p className="line-price">{money(lineTotal(p, qty))}</p>
                 </li>
               ))}
             </ul>

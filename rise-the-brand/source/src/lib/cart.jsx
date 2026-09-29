@@ -1,5 +1,5 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useReducer, useState } from "react";
-import { findProduct } from "../data/store.js";
+import { lineTotal, findProduct } from "../data/store.js";
 
 const CartContext = createContext(null);
 
@@ -75,7 +75,7 @@ export function CartProvider({ children }) {
       items,
       lines,
       count: lines.reduce((n, l) => n + l.qty, 0),
-      subtotal: lines.reduce((n, l) => n + l.qty * l.product.price, 0),
+      subtotal: lines.reduce((n, l) => n + lineTotal(l.product, l.qty), 0),
       add,
       setQty,
       clear,
