@@ -239,6 +239,14 @@
   .footer-col:nth-child(n + 3) { border-top: 1px solid var(--line); }
 }
 
+/* An odd card out at the end of the grid spans the full row, photo on the
+   left at the same size as the cards above, so the range never ends on a gap. */
+@media (min-width: 641px) {
+  .cards > .card:last-child:nth-child(odd) { grid-column: 1 / -1; flex-direction: row; }
+  .cards > .card:last-child:nth-child(odd) .card-media { flex: 0 0 calc(50% - clamp(16px, 2.2vw, 32px) / 2 - 1px); }
+  .cards > .card:last-child:nth-child(odd) .card-body { padding-left: calc(clamp(20px, 2.2vw, 32px) + clamp(16px, 2.2vw, 32px)); }
+}
+
 @media (max-width: 640px) {
   .cards { grid-template-columns: minmax(0, 1fr); }
 }

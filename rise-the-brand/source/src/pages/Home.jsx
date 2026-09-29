@@ -67,7 +67,7 @@ function Hero() {
               <span className="line"><span>clean.</span></span>
             </h1>
             <p className="stage-text">
-              Hardworking cleaning products for South African homes. Surfaces, floors, dishes and the shoes at the door.
+              Hardworking cleaning products for South African homes. Surfaces, floors, dishes, the shoes at the door and the bath at the end of the day.
             </p>
             <div className="stage-actions">
               <Link to="/" section="shop" className="btn btn-primary">Shop the range</Link>
@@ -181,7 +181,7 @@ function Range() {
         <div className="section-head">
           <h2 className="section-title" id="shop-title">Shop the range</h2>
           <p className="section-aside">
-            Four essentials for the whole house. Shops and distributors can{" "}
+            Five essentials for the whole house. Shops and distributors can{" "}
             <Link to="/trade" className="text-link">apply to sell Rise</Link>.
           </p>
         </div>
@@ -271,7 +271,7 @@ function AboutTeaser() {
           </div>
           <div className="value">
             <h3>Fewer, better</h3>
-            <p>We would rather make four products you trust than twenty you forget.</p>
+            <p>We would rather make five products you trust than twenty you forget.</p>
           </div>
           <div className="value">
             <h3>Simple to use</h3>
@@ -288,7 +288,7 @@ export default function Home() {
   return (
     <>
       <Hero />
-      <Marquee items={["Multi Purpose Cleaner", "Pine Gel", "Dishwashing Liquid", "Footwear Cleaner", "Proudly South African", "elevate your clean"]} />
+      <Marquee items={["Multi Purpose Cleaner", "Pine Gel", "Dishwashing Liquid", "Footwear Cleaner", "Bubble Bath", "Proudly South African", "elevate your clean"]} />
       <Range />
       <HowItWorks />
       <AboutTeaser />

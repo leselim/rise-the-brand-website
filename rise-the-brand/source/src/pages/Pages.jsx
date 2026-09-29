@@ -39,7 +39,7 @@ export function About() {
           <h2 className="section-title" id="story-title">Why we started small.</h2>
           <div className="prose">
             <p>A cleaning cupboard fills up fast. A spray for this, a liquid for that, and a few half used bottles nobody remembers buying. We wanted to change that.</p>
-            <p>So the range stays tight. A Multi Purpose Cleaner for surfaces all around the house, a Pine Gel for floors, a Dishwashing Liquid for the sink, and a Footwear Cleaner that brings tired sneakers back to life. Four products that cover most of what a household actually cleans.</p>
+            <p>So the range stays tight. A Multi Purpose Cleaner for surfaces all around the house, a Pine Gel for floors, a Dishwashing Liquid for the sink, a Footwear Cleaner that brings tired sneakers back to life, and a Bubble Bath for the end of the day. Five products that cover most of what a household actually needs.</p>
             <p>When a new product joins the range, it will be because it genuinely makes cleaning at home easier.</p>
           </div>
         </div>
@@ -87,7 +87,7 @@ export function About() {
       )}
 
       <Band
-        title="Four essentials, made properly."
+        title="Five essentials, made properly."
         text="Everything a household cleans most, without a cupboard full of bottles."
         cta={<Link to="/" section="shop" className="btn btn-ghost-light">Shop the range</Link>}
       />

@@ -69,3 +69,11 @@ TO PUBLISH
    With signupUrl set, the application is saved to the Google Sheet (which
    emails Rise) and the page shows a thank-you. The mailto fallback only runs
    if signupUrl is empty.
+
+10. Bubble Bath added (fifth product)
+   src/data/store.js: Bubble Bath 200 ml, R18 each, R15 each from 12.
+   Photos: public/images/products/bubble-bath-large/medium/thumb.webp
+   Copy updated from four products to five (home, about, marquee, meta description).
+   src/styles/layout.css: an odd last card in the shop grid now spans the full row.
+   /rate-sheets: P005 Bubble Bath, 12 x 200 ml, R18 each, R15 bulk, R180 case.
+   TO CONFIRM: bottle label reads 500ml; case size of 12; ingredients text.

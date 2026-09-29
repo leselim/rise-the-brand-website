@@ -194,6 +194,45 @@ export const products = [
       "Keep out of reach of children. Avoid contact with eyes. If contact occurs, rinse well with water. If swallowed, seek medical advice immediately and show this label.",
     ],
   },
+  {
+    id: "bubble-bath",
+    name: "Bubble Bath",
+    shortName: "Bubble Bath",
+    category: "Bath",
+    size: "200 ml",
+    price: 18,
+    bulk: { price: 15, from: 12 }, // per unit when buying this many or more
+    rating: null,
+    purchased: null,
+    stock: 40,
+    badge: "New",
+    image: "images/products/bubble-bath-large.webp",
+    imageSet: "images/products/bubble-bath-medium.webp 337w, images/products/bubble-bath-large.webp 675w",
+    thumb: "images/products/bubble-bath-thumb.webp",
+    scale: 0.8,
+    ghost: "200",
+    summary:
+      "A floral bubble bath that fills the tub with soft, lasting foam. A little under running water is all it takes.",
+    steps: [
+      { title: "Pour", text: "Add a capful under the running tap as the bath fills." },
+      { title: "Soak", text: "Swirl the water to lift the foam, then settle in." },
+      { title: "Rinse", text: "Rinse off with clean water when you are done." },
+    ],
+    howToUse: [
+      "Pour a capful under warm running water while the bath fills. Add a little more for extra foam.",
+      "Swirl the water with your hand to spread the bubbles through the tub.",
+      "Rinse your skin with clean water afterwards. For children, use less and always supervise bath time. Close the cap firmly after use.",
+    ],
+    benefit: [
+      "Rich, lasting foam from a small amount, so one bottle runs many baths.",
+      "A light floral scent that fills the bathroom.",
+      "Rinses away cleanly and leaves no ring around the tub.",
+    ],
+    ingredients: [
+      "Water, surfactants, foam booster, salt, preservative, fragrance, colourant.",
+      "For external use only. Keep out of reach of children. Avoid contact with eyes. If contact occurs, rinse well with water. Stop use if irritation occurs. If swallowed, seek medical advice immediately and show this label.",
+    ],
+  },
 ];
 
 // Anything genuinely not on sale yet. The rest of the range is on the trade
