@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { saveToSheet } from "../lib/signup.js";
 import { Link, useRoute } from "../lib/router.jsx";
 import { useCart } from "../lib/cart.jsx";
 import { products, comingSoon, money, provinces, returnPolicy, settings } from "../data/store.js";
@@ -258,6 +259,12 @@ export function Checkout() {
       form.notes ? `Notes: ${form.notes}` : "",
     ].join("\n");
     const mail = `mailto:${settings.orderEmail}?subject=${encodeURIComponent("New order from " + form.name)}&body=${encodeURIComponent(body)}`;
+    saveToSheet("order", {
+      name: form.name, email: form.email, phone: form.phone,
+      address: [form.address, form.suburb, form.city, form.province, form.postal].filter(Boolean).join(", "),
+      items: lines.map((l) => `${l.qty} x ${l.product.name} (${l.product.size})`).join("; "),
+      subtotal: subtotal, notes: form.notes || "",
+    });
     window.location.href = mail;
     setSent(mail);
     clear();

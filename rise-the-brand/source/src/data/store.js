@@ -16,6 +16,10 @@ export const settings = {
   // When the payment gateway is ready, add its checkout link here.
   checkoutUrl: "",
 
+  // Google Apps Script web app URL. Trade applications and orders are saved to the
+  // sheet as well as emailed. Leave empty to skip the sheet. See /google-sheet/SETUP.txt
+  signupUrl: "https://script.google.com/macros/s/AKfycbxpdQ5P8QMLRMmeTW5a7Xx3IqToFGCIQG5ro4UhoqoWaSmCjkAhikZ_q9stPQTX5UtP/exec",
+
   // Shown under the price as "Or 4 easy payments of ...". Off until an instalment provider is connected.
   installments: 0,
 
@@ -38,7 +42,7 @@ export const products = [
     shortName: "Multi Purpose",
     category: "All surfaces",
     size: "750 ml",
-    price: 100,
+    price: 90,
     rating: 4.8, // set to null to hide the stars
     purchased: 124, // set to null to hide the purchase count
     stock: 40,
@@ -78,7 +82,7 @@ export const products = [
     shortName: "Dishwashing",
     category: "Kitchen",
     size: "750 ml",
-    price: 35,
+    price: 29,
     rating: 4.8,
     purchased: null,
     stock: 40,
@@ -116,7 +120,7 @@ export const products = [
     shortName: "Pine Gel",
     category: "Floors",
     size: "1 L",
-    price: 40,
+    price: 42,
     rating: 4.9,
     purchased: null,
     stock: 40,
@@ -154,7 +158,7 @@ export const products = [
     shortName: "Footwear",
     category: "Shoe care",
     size: "200 ml",
-    price: 100,
+    price: 90,
     rating: 4.7,
     purchased: 86,
     stock: 32,

@@ -1,0 +1,33 @@
+CONNECTING THE WEBSITE TO A GOOGLE SHEET
+
+1. Create the sheet
+   Go to sheets.google.com, make a new blank sheet, name it "Rise sign-ups".
+
+2. Add the script
+   In the sheet: Extensions > Apps Script.
+   Delete whatever is in Code.gs and paste the contents of Code.gs from this folder.
+   Change NOTIFY_EMAIL if you want alerts sent somewhere else, or set it to "" for no emails.
+   Click the save icon.
+
+3. Deploy it as a web app
+   Deploy > New deployment.
+   Click the gear next to "Select type" and choose "Web app".
+   Description: Rise website sign-ups
+   Execute as: Me
+   Who has access: Anyone            <- this must be "Anyone" or the website cannot post to it
+   Click Deploy. Authorise when asked (Advanced > Go to project if Google warns you).
+   Copy the Web app URL. It looks like https://script.google.com/macros/s/AKfycb.../exec
+
+4. Put the URL in the website
+   Open rise-the-brand/source/src/data/store.js and paste it into:
+       signupUrl: "",
+   Save, then commit and push. The tabs "Applications" and "Orders" are created
+   automatically the first time each form is used.
+
+5. Test
+   Submit the Trade form on the site with your own details. Within a few seconds a
+   row should appear on the "Applications" tab and an email should arrive.
+
+CHANGING THE SCRIPT LATER
+   After editing Code.gs you must redeploy: Deploy > Manage deployments > pencil icon >
+   Version: New version > Deploy. The URL stays the same.

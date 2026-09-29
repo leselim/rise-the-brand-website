@@ -38,3 +38,18 @@ TO PUBLISH
    npm install
    npm run build        (creates source/dist)
    Push to main and the workflow deploys it, or upload dist to your host.
+
+6. Google Sheet sign-ups
+   Trade applications and orders are now also saved to a Google Sheet through a
+   small Apps Script web app, on top of the email. Setup and the script are in
+   /google-sheet (SETUP.txt and Code.gs). Paste the deployed URL into
+   settings.signupUrl in src/data/store.js. New files: src/lib/signup.js.
+
+7. Prices and sheet URL (latest)
+   settings.signupUrl now holds the deployed Apps Script URL.
+   Website (individual) prices: Multipurpose Cleaner R90, Dishwashing Liquid R29,
+   Pine Gel R42, Footwear Cleaner R90.
+   Bulk prices per unit (on the rate sheets in /rate-sheets): Multipurpose R42.50
+   (box of 12), Dishwashing R25, Pine Gel R38, Footwear Cleaner R43.33.
+   The earlier "why it changed" explainer was removed from /rate-sheets because
+   its numbers no longer apply.

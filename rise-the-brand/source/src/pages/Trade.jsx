@@ -3,6 +3,7 @@ import { Link } from "../lib/router.jsx";
 import { provinces, settings, tradeNote, tradeTiers, tradeTypes } from "../data/store.js";
 import { Check } from "../components/Icons.jsx";
 import { Band, Breadcrumb } from "../components/ui.jsx";
+import { saveToSheet } from "../lib/signup.js";
 
 /* The two ways to sell Rise, described in words. Prices are sent by email to approved applicants. */
 function Tiers() {
@@ -97,6 +98,10 @@ function SignUp() {
     const mail = `mailto:${settings.tradeEmail}?subject=${encodeURIComponent(
       `${form.type} application from ${form.name}`
     )}&body=${encodeURIComponent(body)}`;
+    saveToSheet("application", {
+      type: form.type, name: form.name, business: form.business || "", email: form.email, phone: form.phone,
+      city: form.city, province: form.province, about: form.about || "",
+    });
     window.location.href = mail;
     setSent(mail);
   };
