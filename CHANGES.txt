@@ -1,0 +1,40 @@
+RISE THE BRAND — WEBSITE UPDATE
+
+All changes are in rise-the-brand/source (the folder that deploys to risethebrand.co.za).
+
+1. Trade prices are off the public site
+   - src/pages/Trade.jsx: the reseller and distributor price tables and the tab
+     switch are gone. The page now explains the two tiers in words and keeps the
+     application form. Applicants are emailed the current rate sheet.
+   - src/data/store.js: "tradeRates" replaced by "tradeTiers" (plain descriptions)
+     and "tradeNote". Prices now live only in the PDFs in /rate-sheets.
+   - src/styles/pages.css: small "tier" styles added for the new section.
+   - Help page FAQ, footer, header, home page and contact text no longer point
+     at "trade rates"; they point at the Trade page and the application.
+
+2. Retail prices on the shop
+   Updated in src/data/store.js to the new prices:
+     Multi Purpose Cleaner  750 ml   R100
+     Dishwashing Liquid     750 ml   R35
+     Pine Gel               1 L      R40
+     Footwear Cleaner       200 ml   R100
+
+3. "Or 4 easy payments of ..." removed
+   settings.installments is now 0, since no instalment provider is connected.
+   Set it back to 4 when one is.
+
+4. Pricing rule
+   Retail (the website price) is the anchor. Resellers pay 75% of retail,
+   distributors 60%, same product and size on every list. Trade prices are
+   never shown on the site.
+
+5. Rate sheets and explainer
+   /rate-sheets/Rise_Distributor_Rates.pdf and Rise_Reseller_Rates.pdf are the
+   current price lists to email to approved applicants.
+   /rate-sheets/Rise_Pricing_Why_It_Changed.pdf explains the new structure.
+
+TO PUBLISH
+   cd rise-the-brand/source
+   npm install
+   npm run build        (creates source/dist)
+   Push to main and the workflow deploys it, or upload dist to your host.

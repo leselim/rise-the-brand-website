@@ -249,6 +249,17 @@
   font-size: 14px; max-width: 86ch;
 }
 
+/* Trade tiers (replaces the public price tables) */
+.tier-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--gap); }
+.tier { background: #fff; border: 1px solid var(--line); padding: clamp(24px, 3.2vw, 40px); }
+.tier-title { font-size: clamp(24px, 2.4vw, 32px); letter-spacing: -0.035em; }
+.tier-who { margin-top: 10px; color: var(--ink-2); }
+.tier-points { list-style: none; margin: 22px 0 0; padding: 0; display: grid; gap: 12px; }
+.tier-points li { display: grid; grid-template-columns: 20px minmax(0, 1fr); gap: 12px; align-items: start; color: var(--ink); }
+.tier-check { display: inline-grid; place-items: center; width: 20px; height: 20px; background: var(--touch-soft); color: var(--touch-ink); }
+.tier-check svg { width: 12px; height: 12px; }
+@media (max-width: 720px) { .tier-grid { grid-template-columns: 1fr; } }
+
 /* Application form */
 .trade-form { display: grid; grid-template-columns: minmax(0, 4fr) minmax(0, 7fr); gap: var(--gap); align-items: start; }
 .trade-form-intro { position: sticky; top: calc(var(--header-h) + 24px); }

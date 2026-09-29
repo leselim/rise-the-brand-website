@@ -16,8 +16,8 @@ export const settings = {
   // When the payment gateway is ready, add its checkout link here.
   checkoutUrl: "",
 
-  // Shown under the price as "Or 4 easy payments of ...". Set to 0 to hide it.
-  installments: 4,
+  // Shown under the price as "Or 4 easy payments of ...". Off until an instalment provider is connected.
+  installments: 0,
 
   hours: "Monday to Friday, 8 a.m. to 5 p.m.",
 
@@ -38,7 +38,7 @@ export const products = [
     shortName: "Multi Purpose",
     category: "All surfaces",
     size: "750 ml",
-    price: 29.17,
+    price: 100,
     rating: 4.8, // set to null to hide the stars
     purchased: 124, // set to null to hide the purchase count
     stock: 40,
@@ -78,7 +78,7 @@ export const products = [
     shortName: "Dishwashing",
     category: "Kitchen",
     size: "750 ml",
-    price: 27.5,
+    price: 35,
     rating: 4.8,
     purchased: null,
     stock: 40,
@@ -116,7 +116,7 @@ export const products = [
     shortName: "Pine Gel",
     category: "Floors",
     size: "1 L",
-    price: 37.5,
+    price: 40,
     rating: 4.9,
     purchased: null,
     stock: 40,
@@ -154,7 +154,7 @@ export const products = [
     shortName: "Footwear",
     category: "Shoe care",
     size: "200 ml",
-    price: 89,
+    price: 100,
     rating: 4.7,
     purchased: 86,
     stock: 32,
@@ -208,67 +208,37 @@ export const comingSoon = [];
   Courier is charged per order, not per unit.
   Change a price here and it updates the table, the cards and the print view.
 */
-export const tradeRates = {
-  reseller: {
+/*
+  Trade prices are no longer published on the site. The current reseller and
+  distributor rate sheets are sent by email to approved applicants, so they
+  can be changed without touching the website. This block only describes the
+  two tiers in words.
+*/
+export const tradeTiers = [
+  {
     id: "reseller",
-    title: "Reseller product rates",
-    blurb:
-      "For shops, salons, spaza traders and anyone buying Rise stock to sell on. Order by the case.",
-    note: "Surcharges apply for high risk and grey areas. We recommend Pudo or Pargo for deliveries in those areas, to avoid delays and extra costs.",
-    rows: [
-      { code: "P001", product: "Rise Multipurpose Cleaner", pack: "12 x 750 ml", unit: 42.5, bulk: 510, courier: 170, total: 680 },
-      { code: "P002", product: "Dishwashing Liquid", pack: "10 x 1 L", unit: 30, bulk: 300, courier: 170, total: 470 },
-      { code: "P003", product: "Thick Bleach", pack: "10 x 1 L", unit: 30, bulk: 300, courier: 170, total: 470 },
-      { code: "P004", product: "Pine Gel", pack: "10 x 1 kg", unit: 40, bulk: 400, courier: 170, total: 570 },
-      {
-        code: "P005",
-        product: "Cockroach Killer",
-        pack: "10 x 50 ml",
-        unit: 40,
-        bulk: 400,
-        courier: [
-          { label: "Pudo", amount: 50 },
-          { label: "Doorstep", amount: 135 },
-        ],
-        total: [
-          { label: "Pudo", amount: 450 },
-          { label: "Doorstep", amount: 535 },
-        ],
-      },
-      {
-        code: "P006",
-        product: "Potshiner",
-        pack: "10 x 100 ml",
-        unit: 18,
-        bulk: 180,
-        courier: [
-          { label: "Pudo", amount: 100 },
-          { label: "Doorstep", amount: 135 },
-        ],
-        total: [
-          { label: "Pudo", amount: 280 },
-          { label: "Doorstep", amount: 315 },
-        ],
-      },
-      { code: "P007", product: "Air Freshener", pack: "6 x 350 ml", unit: 25, bulk: 150, courier: 170, total: 320 },
+    title: "Resellers",
+    who: "Shops, salons, spaza traders and anyone buying Rise stock to sell on.",
+    points: [
+      "Order by the case at reseller prices and set your own shelf price.",
+      "Cases are sent to your door by courier, charged once per order.",
+      "Pay by EFT once we confirm your total, then upload your proof of payment.",
     ],
   },
-
-  distributor: {
+  {
     id: "distributor",
-    title: "Distributor product rates",
-    blurb:
-      "For distributors carrying Rise across an area. Lower unit costs than the reseller list, plus commission on every item you move.",
-    note: "Commission is R25 per item on all detergents except the Multipurpose Cleaner.",
-    rows: [
-      { code: "P001", product: "Rise Multipurpose Cleaner", pack: "12 x 750 ml", unit: 29.17, bulk: 350, courier: 170, total: 520 },
-      { code: "P002", product: "Dishwashing Liquid", pack: "10 x 1 L", unit: 27.5, bulk: 275, courier: 170, total: 445 },
-      { code: "P003", product: "Thick Bleach", pack: "10 x 1 L", unit: 27.5, bulk: 275, courier: 170, total: 445 },
-      { code: "P004", product: "Pine Gel", pack: "10 x 1 kg", unit: 37.5, bulk: 375, courier: 170, total: 545 },
-      { code: "P005", product: "Air Freshener", pack: "6 x 350 ml", unit: 25, bulk: 150, courier: 170, total: 320 },
+    title: "Distributors",
+    who: "Partners carrying the full Rise range across an area.",
+    points: [
+      "Lower unit prices than the reseller list.",
+      "R25 commission on every item you sell, across the whole range.",
+      "Pay by EFT once we confirm your total, then upload your proof of payment.",
     ],
   },
-};
+];
+
+export const tradeNote =
+  "Delivery surcharges apply in high risk and grey areas. We recommend Pudo or Pargo for deliveries there, to avoid delays and extra costs.";
 
 // The two things a trade applicant picks between on the sign up form.
 export const tradeTypes = [

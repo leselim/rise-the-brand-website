@@ -27,18 +27,15 @@ Everything about the products lives in source/src/data/store.js:
 names, prices, sizes, stock, ratings, badges, the three steps,
 How to use, Benefit, Ingredients, the Return Policy and your contact email.
 
-TRADE RATES
-The reseller and distributor price lists are in the same file, under
-"tradeRates". Each row carries the unit price, the full case price, the
-courier fee and the total. Rows where courier differs by method (Pudo or
-Doorstep) hold a short list instead of a single number.
-Change a price there and the Trade page, its tables and the print view
-all follow. The page is at /trade and the application form is at the
-bottom of it; applications are emailed to "tradeEmail" in settings.
+TRADE
+Trade prices are no longer shown on the website. The Trade page (/trade)
+describes the reseller and distributor tiers in words, from "tradeTiers"
+in store.js, and the application form at the bottom of it emails
+applications to "tradeEmail" in settings. Send approved applicants the
+current rate sheet PDF by email; changing a price no longer touches the site.
 
-The four products on the shop currently use the DISTRIBUTOR unit prices.
-If the shop should show retail prices instead, change "price" on each
-product in store.js. Nothing else needs to change.
+The four products on the shop use RETAIL prices, which sit above the
+reseller rate sheet. Change "price" on each product in store.js to adjust.
 
 PRODUCT PHOTOS
 Photos must have a transparent background, with the studio shadow removed.

@@ -139,7 +139,7 @@ export default function Header() {
             </Link>
           ))}
           <Link to="/about" tabIndex={menuOpen ? 0 : -1}>About</Link>
-          <Link to="/trade" tabIndex={menuOpen ? 0 : -1}>Trade rates</Link>
+          <Link to="/trade" tabIndex={menuOpen ? 0 : -1}>Trade</Link>
           <Link to="/help" tabIndex={menuOpen ? 0 : -1}>Help Desk</Link>
         </nav>
       </div>

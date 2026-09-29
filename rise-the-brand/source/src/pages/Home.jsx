@@ -178,8 +178,8 @@ function Range() {
         <div className="section-head">
           <h2 className="section-title" id="shop-title">Shop the range</h2>
           <p className="section-aside">
-            Four essentials for the whole house. Shops and distributors can order the wider range at{" "}
-            <Link to="/trade" className="text-link">trade rates</Link>.
+            Four essentials for the whole house. Shops and distributors can{" "}
+            <Link to="/trade" className="text-link">apply to sell Rise</Link>.
           </p>
         </div>
         <div className="cards">

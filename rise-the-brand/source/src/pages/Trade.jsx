@@ -1,69 +1,37 @@
 import { useEffect, useState } from "react";
 import { Link } from "../lib/router.jsx";
-import { money, provinces, settings, tradeRates, tradeTypes } from "../data/store.js";
+import { provinces, settings, tradeNote, tradeTiers, tradeTypes } from "../data/store.js";
 import { Check } from "../components/Icons.jsx";
 import { Band, Breadcrumb } from "../components/ui.jsx";
 
-const LISTS = [tradeRates.reseller, tradeRates.distributor];
-
-/* A courier or total cell: either one amount, or named options like Pudo and Doorstep */
-function Amount({ value }) {
-  if (!Array.isArray(value)) return <>{money(value)}</>;
+/* The two ways to sell Rise, described in words. Prices are sent by email to approved applicants. */
+function Tiers() {
   return (
-    <span className="rate-options">
-      {value.map((o) => (
-        <span className="rate-option" key={o.label}>
-          <span className="rate-option-label">{o.label}</span>
-          <span>{money(o.amount)}</span>
-        </span>
-      ))}
-    </span>
-  );
-}
-
-function RateTable({ list }) {
-  return (
-    <div className="rate-block" id={list.id}>
-      <div className="rate-head">
-        <h2 className="rate-title">{list.title}</h2>
-        <p className="rate-blurb">{list.blurb}</p>
+    <section className="section no-rule" aria-labelledby="tiers-title">
+      <div className="wrap">
+        <h2 className="visually-hidden" id="tiers-title">How selling Rise works</h2>
+        <div className="tier-grid">
+          {tradeTiers.map((t) => (
+            <article className="tier" key={t.id} id={t.id}>
+              <h3 className="tier-title">{t.title}</h3>
+              <p className="tier-who">{t.who}</p>
+              <ul className="tier-points">
+                {t.points.map((p) => (
+                  <li key={p}>
+                    <span className="tier-check" aria-hidden="true"><Check /></span>
+                    <span>{p}</span>
+                  </li>
+                ))}
+              </ul>
+            </article>
+          ))}
+        </div>
+        <p className="rate-note">
+          Apply below and we will email you the current rate sheet, stock availability and payment details within one
+          working day. {tradeNote}
+        </p>
       </div>
-
-      <div className="rate-scroll">
-        <table className="rate-table">
-          <caption className="visually-hidden">
-            {list.title}. Courier is charged per order, not per unit.
-          </caption>
-          <thead>
-            <tr>
-              <th scope="col">Code</th>
-              <th scope="col">Product</th>
-              <th scope="col" className="num">Unit</th>
-              <th scope="col" className="num">Full case</th>
-              <th scope="col" className="num">Courier</th>
-              <th scope="col" className="num">Total with courier</th>
-            </tr>
-          </thead>
-          <tbody>
-            {list.rows.map((r) => (
-              <tr key={r.code}>
-                <td data-label="Code" className="rate-code">{r.code}</td>
-                <th scope="row" className="rate-product">
-                  {r.product}
-                  <small>{r.pack}</small>
-                </th>
-                <td data-label="Unit" className="num">{money(r.unit)}</td>
-                <td data-label="Full case" className="num">{money(r.bulk)}</td>
-                <td data-label="Courier" className="num"><Amount value={r.courier} /></td>
-                <td data-label="Total with courier" className="num rate-total"><Amount value={r.total} /></td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-
-      <p className="rate-note">{list.note}</p>
-    </div>
+    </section>
   );
 }
 
@@ -245,73 +213,24 @@ function SignUp() {
 }
 
 export default function Trade() {
-  const [active, setActive] = useState(0);
-
   useEffect(() => {
-    document.title = "Trade rates | Rise The Brand";
+    document.title = "Trade | Rise The Brand";
   }, []);
 
   return (
     <>
       <div className="wrap">
-        <Breadcrumb items={[{ label: "Home", to: "/" }, { label: "Trade rates" }]} />
+        <Breadcrumb items={[{ label: "Home", to: "/" }, { label: "Trade" }]} />
         <section className="page-intro">
-          <h1 className="page-title">Trade rates</h1>
+          <h1 className="page-title">Sell Rise</h1>
           <p className="lead">
-            Rise is sold through distributors and resellers across South Africa. Both price lists are below. Prices are per
-            case, in rand, and courier is charged once per order rather than per unit.
+            Rise is sold through resellers and distributors across South Africa. Both buy by the case, and each has its own
+            rate sheet, which we send to you once you apply.
           </p>
         </section>
       </div>
 
-      <section className="section no-rule" aria-labelledby="rates-title">
-        <div className="wrap">
-          <h2 className="visually-hidden" id="rates-title">Price lists</h2>
-
-          <div className="segmented rate-switch" role="tablist" aria-label="Choose a price list">
-            {LISTS.map((l, i) => (
-              <button
-                key={l.id}
-                type="button"
-                role="tab"
-                id={`rate-tab-${l.id}`}
-                aria-controls={`rate-panel-${l.id}`}
-                aria-selected={i === active}
-                tabIndex={i === active ? 0 : -1}
-                onClick={() => setActive(i)}
-                onKeyDown={(e) => {
-                  const n = e.key === "ArrowRight" ? 1 : e.key === "ArrowLeft" ? -1 : 0;
-                  if (!n) return;
-                  e.preventDefault();
-                  const next = (i + n + LISTS.length) % LISTS.length;
-                  setActive(next);
-                  document.getElementById(`rate-tab-${LISTS[next].id}`)?.focus();
-                }}
-              >
-                {l.id === "reseller" ? "Reseller" : "Distributor"}
-              </button>
-            ))}
-            <span
-              className="segmented-thumb"
-              style={{ transform: `translateX(${active * 100}%)` }}
-              aria-hidden="true"
-            />
-          </div>
-
-          {LISTS.map((l, i) => (
-            <div
-              key={l.id}
-              role="tabpanel"
-              id={`rate-panel-${l.id}`}
-              aria-labelledby={`rate-tab-${l.id}`}
-              hidden={i !== active}
-              className="rate-panel"
-            >
-              <RateTable list={l} />
-            </div>
-          ))}
-        </div>
-      </section>
+      <Tiers />
 
       <SignUp />
 

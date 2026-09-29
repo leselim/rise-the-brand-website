@@ -100,9 +100,9 @@ const FAQ = [
   { q: "How long does delivery take?", a: "Most orders arrive within 3 to 5 working days in main centres, and within 5 to 7 working days in outlying areas." },
   { q: "Can I use the Footwear Cleaner on any shoe?", a: "It is made for sneakers and everyday shoes. On suede, nubuck or delicate materials, test a small hidden area first." },
   { q: "Are your products safe around children and pets?", a: "Use every product as directed on the label and store it out of reach of children and pets. Keep them away from surfaces until they are dry." },
-  { q: "Can I order in bulk for my business?", a: "Yes. Our reseller and distributor rates are on the Trade rates page, along with the form to apply." },
+  { q: "Can I order in bulk for my business?", a: "Yes. Apply on the Trade page and we will email you the current reseller or distributor rate sheet within one working day." },
   { q: "Do I need an account to order?", a: "No. Add products to your cart and check out. Your cart is saved on your device while you shop." },
-  { q: "How do I become a distributor or reseller?", a: "Fill in the form on the Trade rates page. We come back to you within one working day with stock availability and payment details." },
+  { q: "How do I become a distributor or reseller?", a: "Fill in the form on the Trade page. We come back to you within one working day with the rate sheet, stock availability and payment details." },
 ];
 
 const HELP_SECTIONS = [
@@ -176,7 +176,7 @@ export function Help() {
               </div>
               <div>
                 <dt>Stockists and bulk orders</dt>
-                <dd>See the <Link to="/trade">trade rates</Link>, or apply using the form on that page.</dd>
+                <dd>Apply on the <Link to="/trade">Trade page</Link> and we will send you the current rate sheet.</dd>
               </div>
             </dl>
           </section>

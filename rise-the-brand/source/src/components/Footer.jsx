@@ -49,7 +49,7 @@ export default function Footer() {
             <ul>
               <li><Link to="/about">About us</Link></li>
               <li><Link to="/about" section="believe">What we believe</Link></li>
-              <li><Link to="/trade">Trade rates</Link></li>
+              <li><Link to="/trade">Trade</Link></li>
               <li><Link to="/trade" section="apply">Become a distributor</Link></li>
             </ul>
           </div>
