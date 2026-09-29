@@ -111,7 +111,7 @@
 @keyframes marquee { to { transform: translateX(-50%); } }
 
 /* Product cards */
-.cards { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(16px, 2.2vw, 32px); }
+.cards { --cards-gap: clamp(16px, 2.2vw, 32px); display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--cards-gap); }
 .card { display: flex; flex-direction: column; background: #fff; border: 1px solid var(--line); }
 .card-media { position: relative; aspect-ratio: 5 / 4.5; background: var(--tile); display: flex; align-items: flex-end; justify-content: center; padding-bottom: 9%; overflow: hidden; transition: background-color 0.5s ease; }
 .card-media .bottle { height: calc(82% * var(--s)); transition: transform 0.8s var(--ease); }
@@ -240,11 +240,17 @@
 }
 
 /* An odd card out at the end of the grid spans the full row, photo on the
-   left at the same size as the cards above, so the range never ends on a gap. */
+   left at the same width as the cards above, so the range never ends on a gap.
+   The photo tile is shorter than on the square cards and the copy sits in the
+   middle of its half, with the price and button on one line underneath, so
+   there is no empty band above the words. */
 @media (min-width: 641px) {
   .cards > .card:last-child:nth-child(odd) { grid-column: 1 / -1; flex-direction: row; }
-  .cards > .card:last-child:nth-child(odd) .card-media { flex: 0 0 calc(50% - clamp(16px, 2.2vw, 32px) / 2 - 1px); }
-  .cards > .card:last-child:nth-child(odd) .card-body { padding-left: calc(clamp(20px, 2.2vw, 32px) + clamp(16px, 2.2vw, 32px)); }
+  .cards > .card:last-child:nth-child(odd) .card-media { flex: 0 0 calc(50% - var(--cards-gap) / 2 - 1px); aspect-ratio: 16 / 11; padding-bottom: 7%; }
+  .cards > .card:last-child:nth-child(odd) .card-media .bottle { height: calc(86% * var(--s)); }
+  .cards > .card:last-child:nth-child(odd) .card-body { flex-direction: column; justify-content: center; align-items: stretch; gap: 0; padding: clamp(24px, 3vw, 44px) clamp(20px, 2.2vw, 32px); padding-left: calc(clamp(20px, 2.2vw, 32px) + var(--cards-gap)); }
+  .cards > .card:last-child:nth-child(odd) .card-body > * { width: 100%; max-width: 560px; }
+  .cards > .card:last-child:nth-child(odd) .card-buy { flex-direction: row; justify-content: space-between; align-items: center; margin-top: clamp(22px, 2.4vw, 32px); padding-top: clamp(18px, 2vw, 24px); border-top: 1px solid var(--line); }
 }
 
 @media (max-width: 640px) {

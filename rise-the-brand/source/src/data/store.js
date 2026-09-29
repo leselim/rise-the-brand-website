@@ -199,7 +199,7 @@ export const products = [
     name: "Bubble Bath",
     shortName: "Bubble Bath",
     category: "Bath",
-    size: "200 ml",
+    size: "500 ml",
     price: 18,
     bulk: { price: 15, from: 12 }, // per unit when buying this many or more
     rating: null,
@@ -209,8 +209,8 @@ export const products = [
     image: "images/products/bubble-bath-large.webp",
     imageSet: "images/products/bubble-bath-medium.webp 337w, images/products/bubble-bath-large.webp 675w",
     thumb: "images/products/bubble-bath-thumb.webp",
-    scale: 0.8,
-    ghost: "200",
+    scale: 0.86,
+    ghost: "500",
     summary:
       "A floral bubble bath that fills the tub with soft, lasting foam. A little under running water is all it takes.",
     steps: [

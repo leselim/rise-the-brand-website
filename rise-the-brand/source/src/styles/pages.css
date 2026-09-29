@@ -118,7 +118,7 @@
 .pd-price { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 14px; margin-top: 26px; }
 .price-lg { font-size: clamp(34px, 3.2vw, 46px); font-weight: 600; letter-spacing: -0.045em; line-height: 1; font-variant-numeric: tabular-nums; }
 .price-note { font-size: 14px; color: var(--muted); }
-.card-bulk { display: block; font-size: 12px; font-weight: 400; color: var(--muted); margin-top: 2px; }
+.card-bulk { display: block; font-size: 12px; font-weight: 400; letter-spacing: 0; color: var(--muted); margin-top: 2px; }
 .pd .chip { margin-top: 18px; }
 .pd-label { margin-top: 36px; font-size: 14px; font-weight: 600; }
 .qty-row { display: flex; align-items: flex-end; gap: 16px; margin-top: 12px; }
@@ -391,6 +391,16 @@
   .stage-title { font-size: clamp(120px, 7vw, 160px); }
   .stage-text { font-size: 19px; }
   .selector-name { font-size: 16px; }
+}
+
+/* Five product tabs do not fit on one line in the half-width column on small
+   laptops and tablets turned sideways. Stack them three to a row there, with
+   the chosen one filled, instead of letting them spill off the page. */
+@media (min-width: 721px) and (max-width: 1400px) {
+  .segmented-many { display: grid; width: 100%; grid-auto-flow: row; grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .segmented-many button { padding: 0 12px; }
+  .segmented-many .segmented-thumb { display: none; }
+  .segmented-many button[aria-selected="true"] { background: var(--ink); color: #fff; }
 }
 
 @media (max-width: 720px) {
