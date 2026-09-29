@@ -64,3 +64,8 @@ TO PUBLISH
    checkout and order email apply it automatically once the quantity reaches
    the bulk threshold. New helpers: unitPrice() and lineTotal() in store.js.
    Change the threshold per product via bulk.from.
+
+9. Trade form no longer opens an email app
+   With signupUrl set, the application is saved to the Google Sheet (which
+   emails Rise) and the page shows a thank-you. The mailto fallback only runs
+   if signupUrl is empty.

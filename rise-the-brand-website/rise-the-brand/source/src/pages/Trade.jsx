@@ -56,6 +56,7 @@ function SignUp() {
   const [form, setForm] = useState({ type: tradeTypes[0].value });
   const [errors, setErrors] = useState({});
   const [sent, setSent] = useState(null);
+  const [sending, setSending] = useState(false);
 
   const set = (k, v) => {
     setForm((f) => ({ ...f, [k]: v }));
@@ -81,30 +82,50 @@ function SignUp() {
       document.getElementById(`tr-${Object.keys(e)[0]}`)?.focus();
       return;
     }
-    const body = [
-      "Hello Rise,",
-      "",
-      `I would like to apply as a ${form.type}.`,
-      "",
-      `Name: ${form.name}`,
-      form.business ? `Business: ${form.business}` : "",
-      `Email: ${form.email}`,
-      `Phone: ${form.phone}`,
-      `Area: ${[form.city, form.province].filter(Boolean).join(", ")}`,
-      form.about ? `Where I will sell: ${form.about}` : "",
-    ]
-      .filter(Boolean)
-      .join("\n");
-    const mail = `mailto:${settings.tradeEmail}?subject=${encodeURIComponent(
-      `${form.type} application from ${form.name}`
-    )}&body=${encodeURIComponent(body)}`;
-    saveToSheet("application", {
+    const data = {
       type: form.type, name: form.name, business: form.business || "", email: form.email, phone: form.phone,
       city: form.city, province: form.province, about: form.about || "",
-    });
+    };
+    // Saved to the Google Sheet (which also emails Rise). If no sheet is configured,
+    // fall back to opening an email so nothing is lost.
+    if (settings.signupUrl) {
+      setSending(true);
+      saveToSheet("application", data).finally(() => {
+        setSending(false);
+        setSent("sheet");
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      });
+      return;
+    }
+    const body = [
+      "Hello Rise,", "", `I would like to apply as a ${form.type}.`, "",
+      `Name: ${form.name}`, form.business ? `Business: ${form.business}` : "", `Email: ${form.email}`, `Phone: ${form.phone}`,
+      `Area: ${[form.city, form.province].filter(Boolean).join(", ")}`, form.about ? `Where I will sell: ${form.about}` : "",
+    ].filter(Boolean).join("\n");
+    const mail = `mailto:${settings.tradeEmail}?subject=${encodeURIComponent(`${form.type} application from ${form.name}`)}&body=${encodeURIComponent(body)}`;
     window.location.href = mail;
     setSent(mail);
   };
+
+  if (sent === "sheet") {
+    return (
+      <section className="section" id="apply" aria-labelledby="apply-title">
+        <div className="wrap">
+          <div className="done">
+            <span className="done-icon"><Check /></span>
+            <h2 className="page-title page-title-sm" id="apply-title">Thank you, we have your application.</h2>
+            <p className="lead">
+              We will come back to you within one working day with your rate sheet, stock availability and payment details.
+              If you need us sooner, email <a href={`mailto:${settings.tradeEmail}`}>{settings.tradeEmail}</a>.
+            </p>
+            <div className="done-actions">
+              <Link to="/" section="shop" className="btn btn-primary">Back to the range</Link>
+            </div>
+          </div>
+        </div>
+      </section>
+    );
+  }
 
   if (sent) {
     return (
@@ -205,7 +226,7 @@ function SignUp() {
               })}
             </div>
 
-            <button type="submit" className="btn btn-primary btn-lg">Send application</button>
+            <button type="submit" className="btn btn-primary btn-lg" disabled={sending}>{sending ? "Sending…" : "Send application"}</button>
             <p className="form-foot">
               We use your details to answer your application and nothing else. Prefer email? Write to{" "}
               <a href={`mailto:${settings.tradeEmail}`}>{settings.tradeEmail}</a>.
